@@ -1,0 +1,22 @@
+require("./config/moongoseConfig");
+
+const express = require("express");
+
+const app = express();
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+const routeFiles = [
+  "./routes/sellerRoutes",
+  "./routes/brandRoutes",
+  "./routes/mobileRoutes",
+];
+
+routeFiles.forEach((routeFile) => {
+  require(routeFile)(app);
+});
+
+app.listen(8000, () => {
+  console.log("Listening at Port 8000");
+});
