@@ -6,7 +6,7 @@ const SellerSchema = new mongoose.Schema({
     required: [true],
   },
   sellerNipt: {
-    type: Number,
+    type: String,
     required: [true],
   },
   location: {
