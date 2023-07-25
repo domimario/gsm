@@ -2,13 +2,17 @@ const { default: mongoose } = require("mongoose");
 
 const Seller = require("../models/sellerModel");
 
+//Controller for creating a new Seller
+
 module.exports.createSeller = async (req, res) => {
   try {
     const { sellerName, sellerNipt } = req.body;
+
     const existingSeller = await Seller.findOne({ sellerName }, { sellerNipt });
     const existingSellerName = await Seller.findOne({ sellerName });
     const existingSellerNipt = await Seller.findOne({ sellerNipt });
-    const regex = /^[A-Za-z0-9]+$/;
+
+    const regex = /^[A-Za-z0-9\s]+$/;
     const regexNipt = /^[A-Z]\d{8}[A-Z]$/;
 
     if (!regex.test(sellerName)) {
@@ -44,30 +48,36 @@ module.exports.createSeller = async (req, res) => {
   }
 };
 
+// Controller for getting all the Sellers
+
 module.exports.getAllSellers = async (req, res) => {
   try {
-    const seller = await Seller.find({});
+    const seller = await Seller.find({}).populate("mobiles").select("-__v");
     res.status(200).json(seller);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
+//Controller for getting only one Seller from ID
+
 module.exports.getSellerById = async (req, res) => {
   try {
     const { id } = req.params;
-    const seller = await Seller.findById(id);
+    const seller = await Seller.findById(id).populate("mobiles").select("-__v");
     res.status(200).json(seller);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
+//Controller for updating a existing Seller object
 
 module.exports.updateSeller = async (req, res) => {
   try {
     const { sellerName, sellerNipt } = req.body;
     const { id } = req.params;
-    const regex = /^[A-Za-z0-9]+$/;
+    const regex = /^[A-Za-z0-9\s]+$/;
     const regexNipt = /^[A-Z]\d{8}[A-Z]$/;
 
     if (!regex.test(sellerName)) {
@@ -111,6 +121,8 @@ module.exports.updateSeller = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+//Controller for deleting a Seller from ID
 
 module.exports.deleteSeller = async (req, res) => {
   try {

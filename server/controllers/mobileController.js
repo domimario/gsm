@@ -2,6 +2,8 @@ const { default: mongoose } = require("mongoose");
 
 const Mobile = require("../models/mobileModel");
 
+//Controller for creating a new Mobile .
+
 module.exports.createMobile = async (req, res) => {
   try {
     const mobile = await Mobile.create(req.body);
@@ -11,24 +13,38 @@ module.exports.createMobile = async (req, res) => {
   }
 };
 
+//Controller for getting all Mobile devices.
+
 module.exports.getAllMobiles = async (req, res) => {
   try {
-    const mobile = await Mobile.find({});
+    const mobile = await Mobile.find({})
+      .populate("brandName")
+      .populate("modelName")
+      .populate("sellers")
+      .select("-__v");
     res.status(200).json(mobile);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
 
+//Controller for getting only one Mobile by ID
+
 module.exports.getMobileById = async (req, res) => {
   try {
     const { id } = req.params;
-    const mobile = await Mobile.findById(id);
+    const mobile = await Mobile.findById(id)
+      .populate("brandName")
+      .populate("modelName")
+      .populate("sellers")
+      .select("-__v");
     res.status(200).json(mobile);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
+//Controller for updating only one Mobile by ID
 
 module.exports.updateMobile = async (req, res) => {
   try {
@@ -41,6 +57,8 @@ module.exports.updateMobile = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+//Controller for deleting only one Mobile by ID
 
 module.exports.deleteMobile = async (req, res) => {
   try {

@@ -8,6 +8,8 @@ const MobileSchema = new mongoose.Schema({
   conditions: {
     type: Number,
     required: [true],
+    min: [5, "Condition must be between 5 and 10"],
+    max: [10, "Condition must be between 5 and 10"],
   },
   comment: {
     type: String,
@@ -15,6 +17,9 @@ const MobileSchema = new mongoose.Schema({
 
   price: {
     type: Number,
+    required: [true],
+    min: [10],
+    max: [2000],
   },
 
   sellers: [{ type: mongoose.Schema.Types.ObjectId, ref: "Seller" }],
