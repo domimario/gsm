@@ -13,8 +13,7 @@ const SellerSchema = new mongoose.Schema({
     type: String,
     required: [true],
   },
-  mobiles: [{ type: mongoose.Schema.Types.ObjectId, ref: "Model" }],
-
+  mobiles: [{ type: mongoose.Schema.Types.ObjectId, ref: "Mobile" }],
 });
 
 module.exports = mongoose.model("Seller", SellerSchema);
