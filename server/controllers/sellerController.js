@@ -20,7 +20,12 @@ module.exports.createSeller = async (req, res) => {
     }
 
     if (!regexNipt.test(sellerNipt)) {
-      return res.status(400).json({ message: "Nipt format not supported" });
+      return res
+        .status(400)
+        .json({
+          message:
+            "Nipt format not supported , nipt should start with a Letter and finished with a Letter",
+        });
     }
 
     if (existingSellerName) {
