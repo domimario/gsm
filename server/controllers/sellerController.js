@@ -86,11 +86,11 @@ module.exports.updateSeller = async (req, res) => {
     const regexNipt = /^[A-Z]\d{8}[A-Z]$/;
 
     if (!regex.test(sellerName)) {
-      return res.status(400).json({ message: "Invalid seller name format" });
+      return res.status(500).json({ message: "Invalid seller name format" });
     }
 
     if (!regexNipt.test(sellerNipt)) {
-      return res.status(400).json({ message: "Nipt format not supported" });
+      return res.status(500).json({ message: "Nipt format not supported" });
     }
 
     const selectedSeller = await Seller.findById(id);
@@ -106,7 +106,7 @@ module.exports.updateSeller = async (req, res) => {
     });
 
     if (existingSellerByName) {
-      return res.status(400).json({ message: "Seller name already exists" });
+      return res.status(500).json({ message: "Seller name already exists" });
     }
 
     const existingSellerByNipt = await Seller.findOne({
@@ -115,7 +115,7 @@ module.exports.updateSeller = async (req, res) => {
     });
 
     if (existingSellerByNipt) {
-      return res.status(400).json({ message: "Someone already has this nipt" });
+      return res.status(500).json({ message: "Someone already has this nipt" });
     }
 
     const seller = await Seller.findByIdAndUpdate(id, req.body, {

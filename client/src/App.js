@@ -13,7 +13,8 @@ import ListMobile from "./pages/mobiles/ListMobile";
 
 import AddSeller from "./pages/sellers/AddSeller";
 import EditSeller from "./pages/sellers/EditSeller";
-import DetailsSeller from "./pages/sellers/DetailsSeller";
+
+import SellerBox from "./pages/sellers/SellerBox";
 
 function App() {
   return (
@@ -30,7 +31,7 @@ function App() {
             <Route element={<ListMobile />} path={"/mobiles"} />
             <Route element={<AddSeller />} path={"/sellers/new"} />
             <Route element={<EditSeller />} path={"/edit/:id"} />
-            <Route element={<DetailsSeller />} path={"/sellers/:id"} />
+            <Route element={<SellerBox />} path={"/sellers/:id"} />
             <Route element={<ListBrand />} path={"/brands"} />
             <Route element={<ListModel />} path={"/models"} />
           </Routes>

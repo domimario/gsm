@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import "./DetailsSeller.css";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+
+import Modal from "react-bootstrap/Modal";
 
 const DetailsSeller = (props) => {
   const { id } = useParams();
@@ -40,11 +43,7 @@ const DetailsSeller = (props) => {
 
   return (
     <>
-      <div>
-        <h2>Seller Details</h2>
-        <Link to="/sellers">Back to Seller List</Link>
-      </div>
-      <div>
+      <div className="stilizim">
         <p>Seller Name: {seller.sellerName}</p>
         <p>Seller NIPT: {seller.sellerNipt}</p>
         <p>Location: {seller.location}</p>
