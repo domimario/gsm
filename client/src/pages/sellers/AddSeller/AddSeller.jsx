@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import "./AddSeller.css";
+import { useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
 import Alert from "react-bootstrap/Alert";
+import AddPost from "./AddSellerEnuminacion.svg";
+import Swal from "sweetalert2";
+import { BsArrowLeft } from "react-icons/bs";
 
 const AddSeller = (props) => {
   const [sellerName, setSellerName] = useState("");
@@ -15,8 +17,26 @@ const AddSeller = (props) => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
+  const clearForm = () => {
+    setSellerName("");
+    setSellerNipt("");
+    setLocation("");
+    setError(null);
+    setValidated(false);
+  };
+
+  const handleBackClick = () => {
+    navigate("/sellers");
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!sellerName || !sellerNipt || !location) {
+      setError("Please fill in all required fields.");
+      setValidated(true);
+      return;
+    }
 
     try {
       const newSeller = {
@@ -25,11 +45,17 @@ const AddSeller = (props) => {
         location,
       };
 
-      setValidated(true);
       const response = await axios.post(
         "http://localhost:8000/api/sellers",
         newSeller
       );
+      Swal.fire({
+        position: "center-top",
+        icon: "success",
+        title: "New seller has been saved",
+        showConfirmButton: false,
+        timer: 2700,
+      });
       navigate("/sellers");
       console.log("New Seller created: ", response.data);
 
@@ -37,65 +63,79 @@ const AddSeller = (props) => {
       setSellerNipt("");
       setLocation("");
       setError(null);
+      setValidated(false);
     } catch (error) {
-      setError(error.response.data.message);
+      setError(
+        error.response?.data?.message ||
+          "An error occurred while creating the seller."
+      );
     }
   };
 
   return (
     <>
-      {error && <Alert variant="danger">{error}</Alert>}
-      <Form noValidate validated={validated} onSubmit={handleSubmit}>
-        <Row className="mb-3">
-          <Form.Group as={Col} md="4" controlId="validationCustom01">
-            <Form.Label></Form.Label>
-            <Form.Control
-              required
-              type="text"
-              placeholder="Seller Name"
-              value={sellerName}
-              onChange={(e) => setSellerName(e.target.value)}
-            />
-            <Form.Control.Feedback type="invalid">
-              Please provide a valid Name.
-            </Form.Control.Feedback>
-          </Form.Group>
-        </Row>
-        <Row className="mb-3">
-          <Form.Group as={Col} md="4" controlId="validationCustom02">
-            <Form.Label></Form.Label>
-            <Form.Control
-              required
-              type="text"
-              placeholder="NIPT"
-              value={sellerNipt}
-              onChange={(e) => setSellerNipt(e.target.value)}
-            />
-            <Form.Control.Feedback type="invalid">
-              Please provide a valid NIPT.
-            </Form.Control.Feedback>
-          </Form.Group>
-        </Row>
-        <Row className="mb-3">
-          <Form.Group as={Col} md="4" controlId="validationCustom03">
-            <Form.Label></Form.Label>
-            <Form.Control
-              required
-              type="text"
-              placeholder="Location"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-            />
-            <Form.Control.Feedback type="invalid">
-              Please provide a valid Location.
-            </Form.Control.Feedback>
-          </Form.Group>
-        </Row>
-        <Button type="submit">Add Seller</Button>{" "}
-        <Link to={"/sellers"}>
-          <Button variant="danger">Cancel</Button>
-        </Link>
-      </Form>
+      <div className="container-add">
+        <div className="row">
+          <div className="col-md-6">
+            <img src={AddPost} alt="" className="img-fluid" />
+          </div>
+          <div className="col-md-6">
+            <div className="new-seller-head">
+              {" "}
+              <Button onClick={handleBackClick} className="back-button ">
+                <BsArrowLeft size={25} />
+              </Button>
+              <h1>New Seller</h1>
+            </div>
+            <div className="add-form">
+              <Form onSubmit={handleSubmit}>
+                <Form.Group>
+                  <Form.Label>Seller Name</Form.Label>
+                  <Form.Control
+                    required
+                    type="text"
+                    placeholder="ex . Tegeria"
+                    value={sellerName}
+                    onChange={(e) => setSellerName(e.target.value)}
+                    isInvalid={validated && !sellerName}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>NIPT</Form.Label>
+                  <Form.Control
+                    required
+                    type="text"
+                    placeholder="ex . A12345678A"
+                    value={sellerNipt}
+                    onChange={(e) => setSellerNipt(e.target.value)}
+                    isInvalid={validated && !sellerNipt}
+                  />
+                </Form.Group>
+                <Form.Group>
+                  <Form.Label>Location</Form.Label>
+                  <Form.Control
+                    required
+                    type="text"
+                    placeholder="ex . Tirane"
+                    value={location}
+                    onChange={(e) => setLocation(e.target.value)}
+                    isInvalid={validated && !location}
+                  />
+                </Form.Group>
+                <div className="button-forms">
+                  {" "}
+                  <Button type="submit" variant="success">
+                    Add Seller
+                  </Button>{" "}
+                  <Button onClick={clearForm} variant="danger">
+                    Clear All
+                  </Button>
+                </div>
+              </Form>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

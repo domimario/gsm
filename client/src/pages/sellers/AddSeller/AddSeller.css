@@ -1,0 +1,18 @@
+.container-add {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  margin-top: 100px;
+}
+
+.button-forms {
+  margin-top: 20px;
+}
+
+.new-seller-head {
+  display: flex;
+}
+
+.add-form {
+  margin-top: 25px;
+}

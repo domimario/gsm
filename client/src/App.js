@@ -6,15 +6,15 @@ import Home from "./pages/home/Home";
 import About from "./pages/about/About";
 import Contact from "./pages/contact/Contact";
 
-import ListSeller from "./pages/sellers/ListSeller";
+import ListSeller from "./pages/sellers/ListSeller/ListSeller";
 import ListBrand from "./pages/brands/ListBrand";
 import ListModel from "./pages/models/ListModel";
 import ListMobile from "./pages/mobiles/ListMobile";
 
-import AddSeller from "./pages/sellers/AddSeller";
-import EditSeller from "./pages/sellers/EditSeller";
+import AddSeller from "./pages/sellers/AddSeller/AddSeller";
+import EditSeller from "./pages/sellers/EditSeller/EditSeller";
 
-import SellerBox from "./pages/sellers/SellerBox";
+import SellerBox from "./pages/sellers/DetailsSeller/SellerBox";
 
 function App() {
   return (

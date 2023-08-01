@@ -3,11 +3,11 @@ import axios from "axios";
 import "./ListSeller.css";
 import Table from "react-bootstrap/esm/Table";
 import Button from "react-bootstrap/esm/Button";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { IoIosAdd } from "react-icons/io";
 
 const ListSeller = (prop) => {
-  const { id } = useParams();
   const [sellers, setSellers] = useState([]);
   const navigate = useNavigate();
 
@@ -37,8 +37,8 @@ const ListSeller = (prop) => {
       text: "You won't be able to revert this!",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "##3085d6",
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
@@ -61,61 +61,63 @@ const ListSeller = (prop) => {
 
   return (
     <>
-      <div>
+      <div className="table-container">
         <div className="header-seller">
           <h1>SELLER LIST</h1>
           <Link to={"/sellers/new"}>
-            <Button variant="primary">Add a new seller</Button>{" "}
+            <Button variant="light">
+              {" "}
+              <IoIosAdd size={20} style={{ marginRight: "5px" }} />
+              Add a new seller
+            </Button>{" "}
           </Link>
         </div>
-        <div className="table-container">
-          <Table responsive striped bordered hover variant="white">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Seller Name</th>
-                <th>Location</th>
-                <th>Actions</th>
+        <Table responsive striped bordered hover variant="white">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Seller Name</th>
+              <th>Location</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {sellers.map((seller, index) => (
+              <tr key={index}>
+                <td>{index + 1}</td>
+                <td>{seller.sellerName}</td>
+                <td>{seller.location}</td>
+                <td>
+                  {" "}
+                  <Button
+                    variant="info"
+                    onClick={(e) => {
+                      ViewSeller(seller._id);
+                    }}
+                  >
+                    View
+                  </Button>{" "}
+                  <Button
+                    variant="secondary"
+                    onClick={(e) => {
+                      EditSeller(seller._id);
+                    }}
+                  >
+                    Edit
+                  </Button>{" "}
+                  <Button
+                    variant="danger"
+                    onClick={(e) => {
+                      DeleteSeller(seller._id);
+                    }}
+                  >
+                    Remove
+                  </Button>
+                </td>
               </tr>
-            </thead>
-            <tbody>
-              {sellers.map((seller, index) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{seller.sellerName}</td>
-                  <td>{seller.location}</td>
-                  <td>
-                    {" "}
-                    <Button
-                      variant="info"
-                      onClick={(e) => {
-                        ViewSeller(seller._id);
-                      }}
-                    >
-                      View
-                    </Button>{" "}
-                    <Button
-                      variant="secondary"
-                      onClick={(e) => {
-                        EditSeller(seller._id);
-                      }}
-                    >
-                      Edit
-                    </Button>{" "}
-                    <Button
-                      variant="danger"
-                      onClick={(e) => {
-                        DeleteSeller(seller._id);
-                      }}
-                    >
-                      Remove
-                    </Button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </Table>
-        </div>
+            ))}
+          </tbody>
+        </Table>
       </div>
     </>
   );

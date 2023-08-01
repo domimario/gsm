@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./DetailsSeller.css";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Button from "react-bootstrap/Button";
-
-import Modal from "react-bootstrap/Modal";
 
 const DetailsSeller = (props) => {
   const { id } = useParams();
