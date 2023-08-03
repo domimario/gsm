@@ -10,6 +10,16 @@ body {
   background-color: #004aad;
 }
 
+.main {
+  display: flex;
+}
+
+.side-main {
+  width: 400px;
+  height: fit-content;
+  background-color: rgba(250, 235, 215, 0.718);
+}
+
 .main-content {
   flex-grow: 1;
 }

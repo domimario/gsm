@@ -1,37 +1,38 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import "./ListSeller.css";
+import "./ListModel.css";
 import Table from "react-bootstrap/esm/Table";
 import Button from "react-bootstrap/esm/Button";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { IoIosAdd } from "react-icons/io";
 
-const ListSeller = (prop) => {
-  const [sellers, setSellers] = useState([]);
+const ListModel = (props) => {
+  const [models, setModels] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchSellers();
+    fetchModels();
   }, []);
 
-  const fetchSellers = async () => {
+  const fetchModels = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/sellers");
-      setSellers(response.data);
+      const response = await axios.get("http://localhost:8000/api/models");
+      setModels(response.data);
     } catch (error) {
-      console.error("Error fetching sellers", error);
+      console.error("Error fetching models", error);
     }
   };
-  const ViewSeller = (id) => {
-    navigate(`/sellers/${id}`);
+
+  const viewModel = (id) => {
+    navigate(`/models/${id}`);
   };
 
-  const EditSeller = (id) => {
-    navigate(`/sellers/edit/${id}`);
+  const editModel = (id) => {
+    navigate(`/models/edit/${id}`);
   };
 
-  const DeleteSeller = async (id) => {
+  const removeModel = async (id) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -50,10 +51,8 @@ const ListSeller = (prop) => {
 
   const proceedDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/sellers/${id}`);
-      setSellers((prevSellers) =>
-        prevSellers.filter((seller) => seller._id !== id)
-      );
+      await axios.delete(`http://localhost:8000/api/models/${id}`);
+      setModels((prevModels) => prevModels.filter((model) => model._id !== id));
     } catch (error) {
       console.error("Error deleting seller", error);
     }
@@ -62,37 +61,42 @@ const ListSeller = (prop) => {
   return (
     <>
       <div className="table-container">
-        <div className="header-seller">
-          <h1>SELLER LIST</h1>
-          <Link to={"/sellers/new"}>
+        <div className="header-model">
+          <h1>MODEL LIST</h1>
+          <Link to={"/models/new"}>
             <Button variant="light">
               {" "}
               <IoIosAdd size={20} style={{ marginRight: "5px" }} />
-              Add a new seller
+              Add a new model
             </Button>{" "}
           </Link>
         </div>
+
         <Table responsive striped bordered hover variant="white">
           <thead>
             <tr>
               <th>#</th>
-              <th>Seller Name</th>
-              <th>Location</th>
-              <th>Actions</th>
+              <th>Model Name</th>
+              <th>Ram</th>
+              <th>Storage</th>
+              <th>Colors</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
-            {sellers.map((seller, index) => (
+            {models.map((model, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
-                <td>{seller.sellerName}</td>
-                <td>{seller.location}</td>
+                <td>{model.modelName}</td>
+                <td>{model.ram}</td>
+                <td>{model.memory}</td>
+                <td>{model.modelColor.join(", ")}</td>
                 <td>
                   {" "}
                   <Button
                     variant="info"
                     onClick={(e) => {
-                      ViewSeller(seller._id);
+                      viewModel(model._id);
                     }}
                   >
                     View
@@ -100,7 +104,7 @@ const ListSeller = (prop) => {
                   <Button
                     variant="secondary"
                     onClick={(e) => {
-                      EditSeller(seller._id);
+                      editModel(model._id);
                     }}
                   >
                     Edit
@@ -108,7 +112,7 @@ const ListSeller = (prop) => {
                   <Button
                     variant="danger"
                     onClick={(e) => {
-                      DeleteSeller(seller._id);
+                      removeModel(model._id);
                     }}
                   >
                     Remove
@@ -122,4 +126,4 @@ const ListSeller = (prop) => {
     </>
   );
 };
-export default ListSeller;
+export default ListModel;
