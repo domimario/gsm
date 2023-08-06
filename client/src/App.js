@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { BrowserRouter, Route, Routes ,Navigate} from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 
 // Navbar
 import Header from "./layout/header/Header";
@@ -21,6 +21,7 @@ import SellerBox from "./pages/sellers/DetailsSeller/SellerBox";
 import ListBrand from "./pages/brands/ListBrand/ListBrand";
 import EditBrand from "./pages/brands/EditBrand/EditBrand";
 import AddBrand from "./pages/brands/AddBrand/AddBrand";
+import DetailsBrand from "./pages/brands/DetailsBrand/DetailsBrand";
 
 // Models
 import ListModel from "./pages/models/ListModel/ListModel";
@@ -37,15 +38,17 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Header />
+
         <div className="main">
           <div className="side-main">
             {" "}
             <SideBar />
           </div>
+
           <main className="main-content">
             {" "}
             <Routes>
-              <Route  element={<Navigate to={"/"}/>} path={"*"}/>
+              <Route element={<Navigate to={"/"} />} path={"*"} />
               <Route element={<Home />} path={"/"} />
               <Route element={<About />} path={"/about"} />
               <Route element={<Contact />} path={"/contact"} />
@@ -60,6 +63,7 @@ function App() {
               <Route element={<ListBrand />} path={"/brands"} />
               <Route element={<AddBrand />} path={"/brands/new"} />
               <Route element={<EditBrand />} path={"/brands/edit/:id"} />
+              <Route element={<DetailsBrand />} path={"/brands/:id"} />
 
               {/* Model Routes  */}
               <Route element={<ListModel />} path={"/models"} />
