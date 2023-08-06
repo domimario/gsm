@@ -118,7 +118,7 @@ const AddModel = (props) => {
                 <div className="button-forms">
                   {" "}
                   <Button type="submit" variant="success">
-                    Add Seller
+                    Add Model
                   </Button>{" "}
                   <Button onClick={clearForm} variant="danger">
                     Clear All

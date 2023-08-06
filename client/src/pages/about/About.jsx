@@ -6,7 +6,7 @@ const About = (props) => {
     <>
       <div className="text-white">
         <div className="centered">
-          <h2>Welcome to the GSM ALBANIA Website!</h2>
+          <h2>ABOUT GSM ALBANIA</h2>
           <p>
             At Our Mobile Marketplace, we bring you a one-stop platform to
             explore a wide range of phone stores and discover the latest mobile

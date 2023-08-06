@@ -1,12 +1,14 @@
 import React from "react";
 import Banner from "./banergsm.png";
+import Services from "../services/Services";
 
 const Home = (props) => {
   return (
     <>
       <div>
-        <img src={Banner} alt="" style={{ width: "100%", height: "100vh" }} />
+        <Services />
       </div>
+      <div></div>
     </>
   );
 };

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ReactPaginate from "react-paginate";
 import axios from "axios";
 import "./ListBrand.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -6,21 +7,59 @@ import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import { IoIosAdd } from "react-icons/io";
 import Swal from "sweetalert2";
+import Spinner from "../../../components/Spinner/Spinner";
 
 const ListBrand = (props) => {
+  const [loading, setLoading] = useState(true);
   const [brands, setBrands] = useState([]);
+  const [brandsPages, setBrandsPages] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchBrands();
+    const fetchData = async () => {
+      await fetchBrands();
+      setLoading(true); // Show the spinner
+      setTimeout(() => {
+        setLoading(false); // Hide the spinner after 2 seconds
+      }, 1000);
+      fetchBrandsPages();
+    };
+
+    fetchData();
   }, []);
 
   const fetchBrands = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/brands");
+      const response = await axios.get("http://localhost:8000/api/brandsall");
       setBrands(response.data);
     } catch (error) {
       console.error("Error fetching brandes", error);
+    }
+  };
+
+  const handlePageClick = async (data) => {
+    console.log(data.selected);
+
+    let currentPage = data.selected + 1;
+
+    fetchBrandsPages(currentPage);
+    const totalPages = Math.ceil(brands.length / 5);
+
+    if (currentPage <= totalPages) {
+      fetchBrandsPages(currentPage);
+    } else {
+      console.log("Invalid page clicked.");
+    }
+  };
+
+  const fetchBrandsPages = async (currentPage) => {
+    try {
+      const response = await axios.get(
+        `http://localhost:8000/api/brands?page=${currentPage}&limit=5`
+      );
+      setBrandsPages(response.data);
+    } catch (error) {
+      console.error("Error fetching sellers", error);
     }
   };
 
@@ -59,64 +98,87 @@ const ListBrand = (props) => {
   };
   return (
     <>
-      <div className="table-container">
-        <div className="header-brand">
-          {" "}
-          <h1>BRAND LIST</h1>
-          <Link to={"/brands/new"}>
-            <Button variant="light">
-              {" "}
-              <IoIosAdd size={20} style={{ marginRight: "5px" }} />
-              Add a new brand
-            </Button>{" "}
-          </Link>
-        </div>
-        <Table responsive striped bordered hover variant="white">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Brand Name</th>
-              <th>Origin</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {brands.map((brand, index) => (
-              <tr key={index}>
-                <td>{index + 1}</td>
-                <td>{brand.brandName}</td>
-                <td>{brand.brandOrigin}</td>
-                <td>
-                  <Button
-                    variant="info"
-                    onClick={(e) => {
-                      viewBrand(brand._id);
-                    }}
-                  >
-                    View
-                  </Button>{" "}
-                  <Button
-                    variant="secondary"
-                    onClick={(e) => {
-                      editBrand(brand._id);
-                    }}
-                  >
-                    Edit
-                  </Button>{" "}
-                  <Button
-                    variant="danger"
-                    onClick={(e) => {
-                      removeBrand(brand._id);
-                    }}
-                  >
-                    Remove
-                  </Button>{" "}
-                </td>
+      {loading ? ( // Conditionally render the Spinner
+        <Spinner />
+      ) : (
+        <div className="table-container">
+          <div className="header-brand">
+            {" "}
+            <h1>BRAND LIST</h1>
+            <Link to={"/brands/new"}>
+              <Button variant="light">
+                {" "}
+                <IoIosAdd size={20} style={{ marginRight: "5px" }} />
+                Add a new brand
+              </Button>{" "}
+            </Link>
+          </div>
+          <Table responsive striped bordered hover variant="white">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Brand Name</th>
+                <th>Origin</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
-      </div>
+            </thead>
+            <tbody>
+              {brandsPages.map((brand, index) => (
+                <tr key={index}>
+                  <td>{index + 1}</td>
+                  <td>{brand.brandName}</td>
+                  <td>{brand.brandOrigin}</td>
+                  <td>
+                    <Button
+                      variant="info"
+                      onClick={(e) => {
+                        viewBrand(brand._id);
+                      }}
+                    >
+                      View
+                    </Button>{" "}
+                    <Button
+                      variant="secondary"
+                      onClick={(e) => {
+                        editBrand(brand._id);
+                      }}
+                    >
+                      Edit
+                    </Button>{" "}
+                    <Button
+                      variant="danger"
+                      onClick={(e) => {
+                        removeBrand(brand._id);
+                      }}
+                    >
+                      Remove
+                    </Button>{" "}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+          <ReactPaginate
+            previousLabel={"previous"}
+            nextLabel={"next"}
+            breakLabel={"..."}
+            pageCount={Math.ceil(brands.length / 5)}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={3}
+            onPageChange={handlePageClick}
+            containerClassName={"pagination justify-content-center"}
+            pageClassName={"page-item"}
+            pageLinkClassName={"page-link"}
+            previousClassName={"page-item"}
+            previousLinkClassName={"page-link"}
+            nextClassName={"page-item"}
+            nextLinkClassName={"page-link"}
+            breakClassName={"page-item"}
+            breakLinkClassName={"page-link"}
+            activeClassName={"active"}
+          />
+        </div>
+      )}
     </>
   );
 };

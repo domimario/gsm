@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./SideBar.css";
-import { Link } from "react-router-dom";
 import axios from "axios";
-import Button from "react-bootstrap/Button";
-import GetBrandNames from "../../pages/brands/GetBrandNames";
+import { Link } from "react-router-dom";
 
 const SideBar = (props) => {
   const [brands, setBrands] = useState([]);
@@ -29,7 +27,7 @@ const SideBar = (props) => {
           <h4>Find your brand</h4>
         </div>
         <div className="side-brand-list">
-          <ul>
+        <ul>
             {brands.map((brand, index) => (
               <li key={index}>
                 <Link to={`/brands/${brand._id}`}>{brand.brandName}</Link>
