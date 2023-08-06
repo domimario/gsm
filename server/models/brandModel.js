@@ -5,11 +5,12 @@ const BrandSchema = new mongoose.Schema({
     type: String,
     required: [true],
   },
+
   brandOrigin: {
     type: String,
     required: [true],
   },
-  
+
   models: [{ type: mongoose.Schema.Types.ObjectId, ref: "Model" }],
 });
 

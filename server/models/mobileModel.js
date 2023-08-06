@@ -1,23 +1,25 @@
 const mongoose = require("mongoose");
 
 const MobileSchema = new mongoose.Schema({
-  brandName: [{ type: mongoose.Schema.Types.ObjectId, ref: "Brand" }],
 
-  modelName: [{ type: mongoose.Schema.Types.ObjectId, ref: "Model" }],
+  brand: { type: mongoose.Schema.Types.ObjectId, ref: "Brand", required: true },
+  
+  model: { type: mongoose.Schema.Types.ObjectId, ref: "Model", required: true },
 
   conditions: {
     type: Number,
-    required: [true],
+    required: true,
     min: [5, "Condition must be between 5 and 10"],
     max: [10, "Condition must be between 5 and 10"],
   },
+
   comment: {
     type: String,
   },
 
   price: {
     type: Number,
-    required: [true],
+    required: true,
     min: [10],
     max: [2000],
   },
