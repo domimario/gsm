@@ -13,6 +13,25 @@ module.exports.createBrand = async (req, res) => {
   }
 };
 
+
+module.exports.getBrands = async (req, res) => {
+  try {
+    const { page, limit } = req.query;
+    const skip = (parseInt(page) - 1) * parseInt(limit);
+    const brand = await Brand.find().skip(skip).limit(limit);
+    if (brand.length == 0) {
+      return res
+        .status(404)
+        .json({ message: "No brand have been added to the datbase" });
+    }
+    res.status(200).json(brand);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
+
 //Controller for getting all Brand objects.
 
 module.exports.getAllBrands = async (req, res) => {

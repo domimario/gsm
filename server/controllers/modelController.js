@@ -13,6 +13,22 @@ module.exports.createModel = async (req, res) => {
   }
 };
 
+module.exports.getModels = async (req, res) => {
+  try {
+    const { page, limit } = req.query;
+    const skip = (parseInt(page) - 1) * parseInt(limit);
+    const model = await Model.find().skip(skip).limit(limit);
+    if (model.length == 0) {
+      return res
+        .status(404)
+        .json({ message: "No models have been added to the datbase" });
+    }
+    res.status(200).json(model);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 //Controller for getting all Models .
 
 module.exports.getAllModels = async (req, res) => {

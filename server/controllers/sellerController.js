@@ -20,12 +20,10 @@ module.exports.createSeller = async (req, res) => {
     }
 
     if (!regexNipt.test(sellerNipt)) {
-      return res
-        .status(400)
-        .json({
-          message:
-            "Nipt format not supported , nipt should start with a Letter and finished with a Letter",
-        });
+      return res.status(400).json({
+        message:
+          "Nipt format not supported , nipt should start with a Letter and finished with a Letter",
+      });
     }
 
     if (existingSellerName) {
@@ -47,6 +45,22 @@ module.exports.createSeller = async (req, res) => {
     }
 
     const seller = await Seller.create(req.body);
+    res.status(200).json(seller);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports.getSellers = async (req, res) => {
+  try {
+    const { page, limit } = req.query;
+    const skip = (parseInt(page) - 1) * parseInt(limit);
+    const seller = await Seller.find().skip(skip).limit(limit);
+    if (seller.length == 0) {
+      return res
+        .status(404)
+        .json({ message: "No sellers have been added to the datbase" });
+    }
     res.status(200).json(seller);
   } catch (error) {
     res.status(500).json({ message: error.message });
