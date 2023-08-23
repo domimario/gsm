@@ -27,7 +27,7 @@ const SideBar = (props) => {
           <h4>Find your brand</h4>
         </div>
         <div className="side-brand-list">
-        <ul>
+          <ul>
             {brands.map((brand, index) => (
               <li key={index}>
                 <Link to={`/brands/${brand._id}`}>{brand.brandName}</Link>
