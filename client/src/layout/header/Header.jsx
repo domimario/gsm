@@ -40,9 +40,6 @@ const Header = (props) => {
                   Models
                 </NavDropdown.Item>
                 <NavDropdown.Divider />
-                <NavDropdown.Item as={Link} to={"/mobiles"}>
-                  Mobiles
-                </NavDropdown.Item>
               </NavDropdown>
               <Nav.Link as={Link} to={"/about"}>
                 About Us
