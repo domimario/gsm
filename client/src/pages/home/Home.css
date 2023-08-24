@@ -1,0 +1,80 @@
+.head {
+  background-color: #004bad82;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.titleSVG {
+  width: 500px;
+}
+
+.brands {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+.brands-logo {
+  background-color: #eae9ecb2;
+}
+
+.icons {
+  width: 150px;
+  filter: grayscale(100%); /* Set default gray color */
+  transition: filter 0.3s; /* Add transition for smooth effect */
+}
+
+.icons:hover {
+  filter: none; /* Remove grayscale filter on hover */
+}
+#xiaomi {
+  width: 100px;
+}
+#apple {
+  width: 100px;
+  height: 100px;
+}
+#google {
+  width: 100px;
+  height: 100px;
+}
+.about-us {
+  background-color: whitesmoke;
+}
+.about-title {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 20px;
+  padding-top: 40px;
+}
+.content-about {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.about-learn {
+  margin-top: 20px;
+}
+
+.services {
+  padding-bottom: 30px;
+}
+
+.service-title {
+  text-align: center;
+  padding-top: 40px;
+  margin-bottom: 40px;
+}
+.boom {
+  transition: transform 0.3s; /* Add transition for smooth zoom effect */
+}
+
+.boom:hover {
+  transform: scale(1.1); /* Zoom in effect on hover */
+}

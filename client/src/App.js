@@ -1,6 +1,9 @@
 import React from "react";
 import "./App.css";
+
 import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+
+import ScrollTop from "./components/ScrollTop";
 
 // Navbar
 import Header from "./layout/header/Header";
@@ -9,7 +12,7 @@ import About from "./pages/about/About";
 import Contact from "./pages/contact/Contact";
 
 // SideBar
-import SideBar from "./layout/sidebar/SideBar";
+// import SideBar from "./layout/sidebar/SideBar";
 
 // Selller
 import ListSeller from "./pages/sellers/ListSeller/ListSeller";
@@ -27,56 +30,57 @@ import DetailsBrand from "./pages/brands/DetailsBrand/DetailsBrand";
 import ListModel from "./pages/models/ListModel/ListModel";
 import AddModel from "./pages/models/AddModel/AddModel";
 import EditModel from "./pages/models/EditModel/EditModel";
+import DetailsModel from "./pages/models/DetailsModel/DetailsModel";
 
-// Mobiles
-import ListMobile from "./pages/mobiles/ListMobile/ListMobile";
-import AddMobile from "./pages/mobiles/AddMobile/AddMobile";
-import EditMobile from "./pages/mobiles/EditMobile/EditMobile";
+/// Mobiles
+// import ListMobile from "./pages/mobiles/ListMobile/ListMobile";
+// import AddMobile from "./pages/mobiles/AddMobile/AddMobile";
+// import EditMobile from "./pages/mobiles/EditMobile/EditMobile";
 
 function App() {
   return (
     <BrowserRouter>
       <div className="App">
         <Header />
+        <ScrollTop />
 
-        <div className="main">
-          <div className="side-main">
+        {/* <div className="side-main">
             {" "}
             <SideBar />
-          </div>
+          </div> */}
 
-          <main className="main-content">
-            {" "}
-            <Routes>
-              <Route element={<Navigate to={"/"} />} path={"*"} />
-              <Route element={<Home />} path={"/"} />
-              <Route element={<About />} path={"/about"} />
-              <Route element={<Contact />} path={"/contact"} />
+        <main className="main-content">
+          {" "}
+          <Routes>
+            <Route element={<Navigate to={"/"} />} path={"*"} />
+            <Route element={<Home />} path={"/"} />
+            <Route element={<About />} path={"/about"} />
+            <Route element={<Contact />} path={"/contact"} />
 
-              {/* Seller Routes  */}
-              <Route element={<ListSeller />} path={"/sellers"} />
-              <Route element={<AddSeller />} path={"/sellers/new"} />
-              <Route element={<EditSeller />} path={"/sellers/edit/:id"} />
-              <Route element={<SellerBox />} path={"/sellers/:id"} />
+            {/* Seller Routes  */}
+            <Route element={<ListSeller />} path={"/sellers"} />
+            <Route element={<AddSeller />} path={"/sellers/new"} />
+            <Route element={<EditSeller />} path={"/sellers/edit/:id"} />
+            <Route element={<SellerBox />} path={"/sellers/:id"} />
 
-              {/* Brand Routes  */}
-              <Route element={<ListBrand />} path={"/brands"} />
-              <Route element={<AddBrand />} path={"/brands/new"} />
-              <Route element={<EditBrand />} path={"/brands/edit/:id"} />
-              <Route element={<DetailsBrand />} path={"/brands/:id"} />
+            {/* Brand Routes  */}
+            <Route element={<ListBrand />} path={"/brands"} />
+            <Route element={<AddBrand />} path={"/brands/new"} />
+            <Route element={<EditBrand />} path={"/brands/edit/:id"} />
+            <Route element={<DetailsBrand />} path={"/brands/:id"} />
 
-              {/* Model Routes  */}
-              <Route element={<ListModel />} path={"/models"} />
-              <Route element={<AddModel />} path={"/models/new"} />
-              <Route element={<EditModel />} path={"/models/edit/:id"} />
+            {/* Model Routes  */}
+            <Route element={<ListModel />} path={"/models"} />
+            <Route element={<AddModel />} path={"/models/new"} />
+            <Route element={<EditModel />} path={"/models/edit/:id"} />
+            <Route element={<DetailsModel />} path={"/models/:id"} />
 
-              {/* Mobiles Routes  */}
+            {/* Mobiles Routes 
               <Route element={<ListMobile />} path={"/mobiles"} />
               <Route element={<AddMobile />} path={"/mobiles/new"} />
-              <Route element={<EditMobile />} path={"mobiles/edit/:id"} />
-            </Routes>
-          </main>
-        </div>
+              <Route element={<EditMobile />} path={"mobiles/edit/:id"} /> */}
+          </Routes>
+        </main>
       </div>
     </BrowserRouter>
   );

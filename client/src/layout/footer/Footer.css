@@ -1,6 +1,8 @@
 .footer-news,
 .footer {
-  background-color: white;
+  background-color: whitesmoke;
+  padding-top: 40px;
+  padding-bottom: 30px;
 }
 
 .footer-copy {
@@ -23,5 +25,5 @@
 }
 
 .links a {
-  text-decoration: none;    
+  text-decoration: none;
 }

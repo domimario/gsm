@@ -1,19 +1,17 @@
 /* About.css */
-body {
-  background-color: #5159b0 !important;
-}
+
 .text-white {
-  color: white;
+  color: black;
   margin-top: 50px;
+  padding: 50px 120px;
 }
 .centered {
-  display: flex;
-  flex-direction: column;
+  color: black;
   align-items: center;
   text-align: center;
-  color: white;
+ 
+  padding: 25px;
 }
-.centered p {
-  padding: 50px;
-  margin: auto;
+.centered h4 {
+  margin-top: 25px;
 }
