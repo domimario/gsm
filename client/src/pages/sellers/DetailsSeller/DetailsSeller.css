@@ -1,3 +1,16 @@
-.stilizim {
-  color: black;
+.seller-name {
+  background-color: #004bad;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+}
+.seller-models {
+  display: flex;
+  align-items: center;
+}
+.back-button {
+  background-color: #004bad;
 }

@@ -1,0 +1,15 @@
+.brand-name {
+    background-color: #004bad;
+    width: 100%;
+    height: 60px;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .brand-models{
+    display: flex;
+    align-items: center;
+    
+  }

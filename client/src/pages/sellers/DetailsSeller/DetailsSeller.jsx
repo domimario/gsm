@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Text from "../../../components/Text/Text";
 import "./DetailsSeller.css";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import { BsArrowLeft } from "react-icons/bs";
+import GetModelsName from "../../brands/DetailsBrand/GetModelsName";
 
 const DetailsSeller = (props) => {
   const { id } = useParams();
-  const [seller, setSeller] = useState(null);
-  const [mobiles, setMobiles] = useState([]);
+  const [seller, setSeller] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchSellerDetails();
@@ -19,17 +22,6 @@ const DetailsSeller = (props) => {
         `http://localhost:8000/api/sellers/${id}`
       );
       setSeller(response.data);
-      // Fetch mobile details using the mobile Object IDs
-      const mobileIds = response.data.mobiles;
-      if (mobileIds && mobileIds.length > 0) {
-        const mobilesResponse = await axios.get(
-          `http://localhost:8000/api/mobiles`,
-          {
-            params: { ids: mobileIds }, // Pass the array of mobile IDs as query parameters
-          }
-        );
-        setMobiles(mobilesResponse.data);
-      }
     } catch (error) {
       console.error("Error fetching seller details", error);
     }
@@ -39,35 +31,56 @@ const DetailsSeller = (props) => {
     return <div>Loading...</div>;
   }
 
+  const handleBackClick = () => {
+    navigate("/sellers");
+  };
+
   return (
     <>
-      <div className="stilizim">
-        <p>Seller Name: {seller.sellerName}</p>
-        <p>Seller NIPT: {seller.sellerNipt}</p>
-        <p>Location: {seller.location}</p>
-
-        <h3>Mobiles:</h3>
+      <div className="container">
+        <div className=" container seller-name">
+          <Text
+            text={seller.sellerName}
+            family={"open-sans"}
+            lineheight={"l24"}
+            size={"s40"}
+            weight={"bold"}
+            color={"white"}
+          />
+        </div>
+        <br />
+        <div className=" seller-models">
+          <Button onClick={handleBackClick} className="back-button ">
+            <BsArrowLeft size={15} />
+          </Button>
+          <Text
+            text={"Phone Models"}
+            family={"open-sans"}
+            lineheight={"l24"}
+            size={"s27"}
+            weight={"bold"}
+            color={"blue"}
+          />
+        </div>
+        <br />
         <div>
-          {" "}
-          {mobiles.length > 0 ? (
+          {seller.models.length > 0 ? (
             <ul>
-              {mobiles.map((mobile) => (
-                <li key={mobile._id}>
-                  <p>Brand: {mobile.brandName[0].brandName}</p>
-                  <p>Model: {mobile.modelName[0].modelName}</p>
-                  <p>Price: {mobile.price}</p>
+              {seller.models.map((modelid, index) => (
+                <li key={index}>
+                  <p>
+                    <GetModelsName modelId={modelid._id} index={index} />
+                  </p>
                 </li>
               ))}
-              <Link to={""}>
-                <Button>View</Button>
-              </Link>
             </ul>
           ) : (
-            <p>No mobiles found for this seller.</p>
+            <p>No models found for this seller.</p>
           )}
         </div>
       </div>
     </>
   );
 };
+
 export default DetailsSeller;
