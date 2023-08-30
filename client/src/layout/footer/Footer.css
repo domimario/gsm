@@ -27,3 +27,13 @@
 .links a {
   text-decoration: none;
 }
+
+.social-links {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-contact a {
+  text-decoration: none;
+}

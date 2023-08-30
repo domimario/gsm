@@ -38,7 +38,7 @@ const Footer = (props) => {
       <div className="container footer">
         <div className="row">
           <div className="col-lg-3 col-md-6 footer-contact">
-            <Link to={"/"}>
+            <Link to={"/"} className="gsmtitle" >
               <Text
                 text={"GSM Albania"}
                 family={"open-sans"}
@@ -81,7 +81,7 @@ const Footer = (props) => {
               lineheight={"l20"}
               size={"s16"}
               weight={"bold"}
-              color={"black"}
+              color={"gray"}
             />
             <Text
               text={"Email : gsm@albania.com"}
@@ -89,7 +89,7 @@ const Footer = (props) => {
               lineheight={"l20"}
               size={"s16"}
               weight={"bold"}
-              color={"black"}
+              color={"gray"}
             />
           </div>
           <div className="col-lg-3 col-md-6 footer-links">
@@ -212,7 +212,24 @@ const Footer = (props) => {
               weight={"regular"}
               color={"gray"}
             />
-            <div className="socila-links mt-3"></div>
+            <div className="social-links mt-3">
+              <i
+                class="fa-brands fa-instagram fa-xl"
+                style={{ color: " #004aad" }}
+              ></i>
+              <i
+                class="fa-brands fa-twitter fa-xl"
+                style={{ color: " #004aad" }}
+              ></i>
+              <i
+                class="fa-brands fa-pinterest-p"
+                style={{ color: " #004aad" }}
+              ></i>
+              <i
+                class="fa-brands fa-facebook fa-xl"
+                style={{ color: " #004aad" }}
+              ></i>
+            </div>
           </div>
         </div>
       </div>
