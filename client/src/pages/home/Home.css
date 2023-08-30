@@ -22,7 +22,11 @@
 .brands-logo {
   background-color: #eae9ecb2;
 }
-
+.icons-c {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .icons {
   width: 150px;
   filter: grayscale(100%); /* Set default gray color */
@@ -36,8 +40,8 @@
   width: 100px;
 }
 #apple {
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: auto;
 }
 #google {
   width: 100px;
@@ -71,7 +75,11 @@
   padding-top: 40px;
   margin-bottom: 40px;
 }
+
 .boom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   transition: transform 0.3s; /* Add transition for smooth zoom effect */
 }
 

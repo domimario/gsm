@@ -1,9 +1,10 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Footer from "../../layout/footer/Footer";
 import TitleImg from "../../assets/title.svg";
 import Text from "../../components/Text/Text";
 import SamsungIcon from "../../assets/samsung.png";
-import AppleIcon from "../../assets/apple.png";
+import AppleIcon from "../../assets/Apple-Logo.png";
 import XiaomiIcon from "../../assets/xiaomi.png";
 import GoogleIcon from "../../assets/google-removebg-preview.png";
 import AboutIcon from "../../assets/about.svg";
@@ -11,6 +12,11 @@ import AboutIcon from "../../assets/about.svg";
 import "./Home.css";
 
 const Home = (props) => {
+  const navigate = useNavigate();
+
+  const handleLearnMore = () => {
+    navigate("/about");
+  };
   return (
     <>
       <div className="container head " id="home-section">
@@ -45,16 +51,16 @@ const Home = (props) => {
 
       <div className="container brands-logo">
         <div className="row brands">
-          <div className="col-lg-3 ">
+          <div className="col-lg-3 icons-c">
             <img src={SamsungIcon} alt="" className="icons" />
           </div>
-          <div className="col-lg-3">
+          <div className="col-lg-3 icons-c">
             <img src={XiaomiIcon} alt="" className="icons" id="xiaomi" />{" "}
           </div>
-          <div className="col-lg-3">
+          <div className="col-lg-3 icons-c">
             <img src={AppleIcon} alt="" className="icons" id="apple" />
           </div>
-          <div className="col-lg-3">
+          <div className="col-lg-3 icons-c">
             <img src={GoogleIcon} alt="" className="icons" id="google" />
           </div>
         </div>
@@ -84,7 +90,11 @@ const Home = (props) => {
               color={"black"}
             />
 
-            <button type="button" className="about-learn btn btn-outline-info">
+            <button
+              type="button"
+              onClick={handleLearnMore}
+              className="about-learn btn btn-outline-info"
+            >
               <Text
                 text={"Learn More"}
                 family={"open-sans"}
@@ -121,11 +131,11 @@ const Home = (props) => {
             color={"gray"}
           />
         </div>
-        <div className="row">
-          <div className=" col-xl-3 col-md-6 d-flex boom">
+        <div className="row ">
+          <div className=" col-xl-3 col-md-6 d-flex boom ">
             <div className="icon-box">
               <div className="icon">
-                <i class="fa-solid fa-copyright"></i>
+                <i class="fa-solid fa-gem" style={{ color: "#004aad" }}></i>
               </div>
               <div>
                 <Text
@@ -152,7 +162,10 @@ const Home = (props) => {
           <div className=" col-xl-3 col-md-6 d-flex boom">
             <div className="icon-box">
               <div className="icon">
-                <i class="fa-solid fa-copyright"></i>
+                <i
+                  class="fa-solid fa-copyright"
+                  style={{ color: "#004aad" }}
+                ></i>
               </div>
               <div>
                 <Text
@@ -179,7 +192,7 @@ const Home = (props) => {
           <div className=" col-xl-3 col-md-6 d-flex boom">
             <div className="icon-box">
               <div className="icon">
-                <i class="fa-solid fa-copyright"></i>
+                <i class="fa-solid fa-list" style={{ color: "#004aad" }}></i>
               </div>
               <div>
                 <Text
@@ -205,10 +218,12 @@ const Home = (props) => {
           </div>
           <div className=" col-xl-3 col-md-6 d-flex boom">
             <div className="icon-box">
-              <div className="icon">
-                <i class="fa-solid fa-copyright"></i>
-              </div>
+              
               <div>
+              <i
+                  class="fa-solid fa-sack-dollar"
+                  style={{ color: " #004aad" }}
+                ></i>
                 <Text
                   text={"Price"}
                   family={"open-sans"}
@@ -220,10 +235,10 @@ const Home = (props) => {
               </div>
               <div>
                 <Text
-                  text={" "}
+                  text={"Pay-as-you-use "}
                   family={"open-sans"}
                   lineheight={"l24"}
-                  size={"s20"}
+                  size={"s18"}
                   weight={"regular"}
                   color={"gray"}
                 />
