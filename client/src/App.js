@@ -18,7 +18,6 @@ import Contact from "./pages/contact/Contact";
 import ListSeller from "./pages/sellers/ListSeller/ListSeller";
 import AddSeller from "./pages/sellers/AddSeller/AddSeller";
 import EditSeller from "./pages/sellers/EditSeller/EditSeller";
-import SellerBox from "./pages/sellers/DetailsSeller/SellerBox";
 
 // Brand
 import ListBrand from "./pages/brands/ListBrand/ListBrand";
@@ -31,6 +30,7 @@ import ListModel from "./pages/models/ListModel/ListModel";
 import AddModel from "./pages/models/AddModel/AddModel";
 import EditModel from "./pages/models/EditModel/EditModel";
 import DetailsModel from "./pages/models/DetailsModel/DetailsModel";
+import DetailsSeller from "./pages/sellers/DetailsSeller/DetailsSeller";
 
 /// Mobiles
 // import ListMobile from "./pages/mobiles/ListMobile/ListMobile";
@@ -61,7 +61,7 @@ function App() {
             <Route element={<ListSeller />} path={"/sellers"} />
             <Route element={<AddSeller />} path={"/sellers/new"} />
             <Route element={<EditSeller />} path={"/sellers/edit/:id"} />
-            <Route element={<SellerBox />} path={"/sellers/:id"} />
+            <Route element={<DetailsSeller />} path={"/sellers/:id"} />
 
             {/* Brand Routes  */}
             <Route element={<ListBrand />} path={"/brands"} />

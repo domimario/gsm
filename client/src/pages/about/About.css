@@ -1,17 +1,32 @@
-/* About.css */
+.aboutbg {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.background-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  opacity: 0.3;
+}
 
 .text-white {
-  color: black;
-  margin-top: 50px;
-  padding: 50px 120px;
-}
-.centered {
-  color: black;
-  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
- 
-  padding: 25px;
+  color: white;
+  padding: 0 20px;
 }
-.centered h4 {
-  margin-top: 25px;
+
+.centered {
+  max-width: 800px;
+  margin: 0 auto;
 }
