@@ -7,6 +7,7 @@ import Form from "react-bootstrap/Form";
 import AddPost from "./AddSellerEnuminacion.svg";
 import Swal from "sweetalert2";
 import { BsArrowLeft } from "react-icons/bs";
+import Text from "../../../components/Text/Text";
 
 const AddSeller = (props) => {
   const [sellerName, setSellerName] = useState("");
@@ -45,7 +46,7 @@ const AddSeller = (props) => {
       };
 
       const response = await axios.post(
-        "http://localhost:8000/api/sellers",
+        "https://uthmtrqdvk.execute-api.eu-west-2.amazonaws.com/prod/api/sellers",
         newSeller
       );
       Swal.fire({
@@ -73,64 +74,101 @@ const AddSeller = (props) => {
 
   return (
     <>
-      <div className="container-add">
-        <div className="row">
-          <div className="col-md-6">
-            <img src={AddPost} alt="" className="img-fluid" />
-          </div>
-          <div className="col-md-6">
-            <div className="new-seller-head">
-              {" "}
-              <Button onClick={handleBackClick} className="back-button ">
-                <BsArrowLeft size={25} />
-              </Button>
-              <h1>New Seller</h1>
+      <div className="container">
+        <div className="container-add">
+          <div className="row">
+            <div className="col-md-6">
+              <img src={AddPost} alt="" className="img-fluid" />
             </div>
-            <div className="add-form">
-              <Form onSubmit={handleSubmit}>
-                <Form.Group>
-                  <Form.Label>Seller Name</Form.Label>
-                  <Form.Control
-                    required
-                    type="text"
-                    placeholder="ex . Tegeria"
-                    value={sellerName}
-                    onChange={(e) => setSellerName(e.target.value)}
-                    isInvalid={validated && !sellerName}
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>NIPT</Form.Label>
-                  <Form.Control
-                    required
-                    type="text"
-                    placeholder="ex . A12345678A"
-                    value={sellerNipt}
-                    onChange={(e) => setSellerNipt(e.target.value)}
-                    isInvalid={validated && !sellerNipt}
-                  />
-                </Form.Group>
-                <Form.Group>
-                  <Form.Label>Location</Form.Label>
-                  <Form.Control
-                    required
-                    type="text"
-                    placeholder="ex . Tirane"
-                    value={location}
-                    onChange={(e) => setLocation(e.target.value)}
-                    isInvalid={validated && !location}
-                  />
-                </Form.Group>
-                <div className="button-forms">
-                  {" "}
-                  <Button type="submit" variant="success">
-                    Add Seller
-                  </Button>{" "}
-                  <Button onClick={clearForm} variant="danger">
-                    Clear All
-                  </Button>
-                </div>
-              </Form>
+            <div className="col-md-6">
+              <div className="new-seller-head">
+                <Button onClick={handleBackClick} className="back-button ">
+                  <BsArrowLeft size={15} />
+                </Button>
+                <Text
+                  text={"New Seller"}
+                  family={"open-sans"}
+                  lineheight={"l24"}
+                  size={"s40"}
+                  weight={"bold"}
+                  color={"white"}
+                />
+              </div>
+              <div className="add-form">
+                <Form onSubmit={handleSubmit}>
+                  <Form.Group>
+                    <Form.Label>
+                      <Text
+                        text={"Seller Name"}
+                        family={"open-sans"}
+                        lineheight={"l20"}
+                        size={"s16"}
+                        weight={"regular"}
+                        color={"white"}
+                      />
+                    </Form.Label>
+                    <Form.Control
+                      required
+                      type="text"
+                      placeholder="ex . Tegeria"
+                      value={sellerName}
+                      onChange={(e) => setSellerName(e.target.value)}
+                      isInvalid={validated && !sellerName}
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>
+                      {" "}
+                      <Text
+                        text={"NIPT"}
+                        family={"open-sans"}
+                        lineheight={"l20"}
+                        size={"s16"}
+                        weight={"regular"}
+                        color={"white"}
+                      />
+                    </Form.Label>
+                    <Form.Control
+                      required
+                      type="text"
+                      placeholder="ex . A12345678A"
+                      value={sellerNipt}
+                      onChange={(e) => setSellerNipt(e.target.value)}
+                      isInvalid={validated && !sellerNipt}
+                    />
+                  </Form.Group>
+                  <Form.Group>
+                    <Form.Label>
+                      {" "}
+                      <Text
+                        text={"Location"}
+                        family={"open-sans"}
+                        lineheight={"l20"}
+                        size={"s16"}
+                        weight={"regular"}
+                        color={"white"}
+                      />
+                    </Form.Label>
+                    <Form.Control
+                      required
+                      type="text"
+                      placeholder="ex . Tirane"
+                      value={location}
+                      onChange={(e) => setLocation(e.target.value)}
+                      isInvalid={validated && !location}
+                    />
+                  </Form.Group>
+                  <div className="button-forms">
+                    {" "}
+                    <Button type="submit" variant="success">
+                      Add Seller
+                    </Button>{" "}
+                    <Button onClick={clearForm} variant="danger">
+                      Clear All
+                    </Button>
+                  </div>
+                </Form>
+              </div>
             </div>
           </div>
         </div>

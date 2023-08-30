@@ -1,30 +1,34 @@
-const mongoose = require("mongoose");
+// const mongoose = require("mongoose");
 
-const MobileSchema = new mongoose.Schema({
+// const MobileSchema = new mongoose.Schema({
+//   seller: [{ type: mongoose.Schema.Types.ObjectId, ref: "Seller" }],
 
-  brand: { type: mongoose.Schema.Types.ObjectId, ref: "Brand", required: true },
-  
-  model: { type: mongoose.Schema.Types.ObjectId, ref: "Model", required: true },
+//   brand: { type: mongoose.Schema.Types.ObjectId, ref: "Brand" },
 
-  conditions: {
-    type: Number,
-    required: true,
-    min: [5, "Condition must be between 5 and 10"],
-    max: [10, "Condition must be between 5 and 10"],
-  },
+//   model: { type: String },
 
-  comment: {
-    type: String,
-  },
+//   ram: [
+//     {
+//       type: Number,
+//       required: [true],
+//       enum: [3, 4, 5, 6, 8, 12, 16],
+//     },
+//   ],
 
-  price: {
-    type: Number,
-    required: true,
-    min: [10],
-    max: [2000],
-  },
+//   memory: [
+//     {
+//       type: Number,
+//       required: [true],
+//       enum: [32, 64, 128, 256, 512],
+//     },
+//   ],
 
-  sellers: [{ type: mongoose.Schema.Types.ObjectId, ref: "Seller" }],
-});
+//   modelColor: [
+//     {
+//       type: [String],
+//       required: [true],
+//     },
+//   ],
+// });
 
-module.exports = mongoose.model("Mobile", MobileSchema);
+// module.exports = mongoose.model("Mobile", MobileSchema);

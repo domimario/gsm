@@ -30,7 +30,7 @@ const ListModel = (props) => {
 
   const fetchModels = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/modelsall");
+      const response = await axios.get("https://uthmtrqdvk.execute-api.eu-west-2.amazonaws.com/prod/api/modelsall");
       setModels(response.data);
     } catch (error) {
       console.error("Error fetching models", error);
@@ -55,7 +55,7 @@ const ListModel = (props) => {
   const fetchModelsPages = async (currentPage) => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/models?page=${currentPage}&limit=5`
+        `https://uthmtrqdvk.execute-api.eu-west-2.amazonaws.com/prod/api/models?page=${currentPage}&limit=5`
       );
       setModelsPages(response.data);
     } catch (error) {
@@ -90,7 +90,7 @@ const ListModel = (props) => {
 
   const proceedDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/models/${id}`);
+      await axios.delete(`https://uthmtrqdvk.execute-api.eu-west-2.amazonaws.com/prod/api/models/${id}`);
       setModels((prevModels) => prevModels.filter((model) => model._id !== id));
     } catch (error) {
       console.error("Error deleting seller", error);
@@ -119,9 +119,6 @@ const ListModel = (props) => {
               <tr>
                 <th>#</th>
                 <th>Model Name</th>
-                <th>Ram</th>
-                <th>Storage</th>
-                <th>Colors</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -129,10 +126,8 @@ const ListModel = (props) => {
               {modelsPages.map((model, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td>{model.modelName}</td>
-                  <td>{model.ram}</td>
-                  <td>{model.memory}</td>
-                  <td>{model.modelColor.join(", ")}</td>
+                  <td>{model.model}</td>
+
                   <td>
                     {" "}
                     <Button

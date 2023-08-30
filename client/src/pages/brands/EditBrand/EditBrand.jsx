@@ -7,6 +7,7 @@ import Button from "react-bootstrap/esm/Button";
 import EditSVG from "./undraw_up_to_date_re_nqid.svg";
 import Swal from "sweetalert2";
 import { BsArrowLeft } from "react-icons/bs";
+import Text from "../../../components/Text/Text";
 
 const EditBrand = (props) => {
   const { id } = useParams();
@@ -14,20 +15,25 @@ const EditBrand = (props) => {
   const [brand, setBrand] = useState({
     brandName: "",
     brandOrigin: "",
+    models: [],
   });
   const [originalBrand, setOriginalBrand] = useState({
     brandName: "",
     brandOrigin: "",
+    models: [],
   });
+
+  const [modelsList, setModelsList] = useState([]);
 
   useEffect(() => {
     loadBrand();
+    fetchModels();
   }, []);
 
   const loadBrand = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/brands/${id}`
+        `https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/brands/${id}`
       );
       setBrand(response.data); // Update the state with the loaded brand data
       setOriginalBrand(response.data); // Save the original brand data
@@ -35,7 +41,27 @@ const EditBrand = (props) => {
       console.log(error);
     }
   };
+  const fetchModels = async () => {
+    try {
+      const response = await axios.get(
+        "https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/all-models"
+      );
+      const allModels = response.data;
 
+      // Create a list of selected model IDs for the current brand
+      const selectedModelIds = brand.models.map((model) => model._id);
+
+      // Filter all models to include both selected models and those not selected
+      const updatedModelsList = allModels.map((model) => ({
+        ...model,
+        selected: selectedModelIds.includes(model._id),
+      }));
+
+      setModelsList(updatedModelsList);
+    } catch (error) {
+      console.error("Error fetching models:", error);
+    }
+  };
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setBrand({
@@ -45,8 +71,13 @@ const EditBrand = (props) => {
   };
 
   const update = async (e) => {
-    await axios.put(`http://localhost:8000/api/brands/${id}`, brand);
+    await axios.put(
+      `https://owhww9cgih.execute-api.eu-west-2.amazonaws.com/dev/update-brand/${id}`,
+      brand
+    );
+    console.log("Brand updated successfully!");
   };
+
   const clearForm = () => {
     setBrand({ ...originalBrand });
   };
@@ -54,6 +85,7 @@ const EditBrand = (props) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      console.log("Submitting the form...");
       const result = await Swal.fire({
         title: "Do you want to save the changes?",
         showDenyButton: true,
@@ -80,7 +112,7 @@ const EditBrand = (props) => {
 
   return (
     <>
-      <div className="edit-content">
+      <div className=" container edit-content">
         <div className="container mt-4 ">
           <div className="row">
             <div className="col-md-6">
@@ -92,7 +124,14 @@ const EditBrand = (props) => {
                 <Button onClick={handleBackClick} className="back-button ">
                   <BsArrowLeft size={25} />
                 </Button>
-                <h1>Edit Brand</h1>
+                <Text
+                  text={"Edit Brand"}
+                  family={"open-sans"}
+                  lineheight={"l24"}
+                  size={"s40"}
+                  weight={"bold"}
+                  color={"white"}
+                />
               </div>
               <Form onSubmit={handleSubmit}>
                 <Form.Group controlId="sellerName">
@@ -115,7 +154,20 @@ const EditBrand = (props) => {
                     onChange={handleInputChange}
                   />
                 </Form.Group>
-
+                <Form.Label>Models</Form.Label>
+                <Form.Control
+                  as="select"
+                  multiple
+                  name="models"
+                  value={brand.models}
+                  onChange={handleInputChange}
+                >
+                  {modelsList.map((model) => (
+                    <option key={model._id} value={model._id}>
+                      {model.model} {model.selected ? "(Selected)" : ""}
+                    </option>
+                  ))}
+                </Form.Control>
                 <div className="edit-button">
                   <Button type="submit" variant="success">
                     Update

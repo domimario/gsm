@@ -129,8 +129,8 @@ const ListMobiles = (props) => {
               {mobilesPages.map((mobile, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td>{mobile.brandName[0].brandName}</td>
-                  <td>{mobile.modelName.modelName}</td>
+                  <td>{mobile.brand[0].brandName}</td>
+                  <td>{mobile.model.modelName}</td>
                   <td>{mobile.price}</td>
                   <td>
                     {" "}

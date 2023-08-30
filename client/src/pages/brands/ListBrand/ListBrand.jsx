@@ -30,7 +30,9 @@ const ListBrand = (props) => {
 
   const fetchBrands = async () => {
     try {
-      const response = await axios.get("http://localhost:8000/api/brandsall");
+      const response = await axios.get(
+        "https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/all-brands"
+      );
       setBrands(response.data);
     } catch (error) {
       console.error("Error fetching brandes", error);
@@ -55,7 +57,7 @@ const ListBrand = (props) => {
   const fetchBrandsPages = async (currentPage) => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/brands?page=${currentPage}&limit=5`
+        `https://uthmtrqdvk.execute-api.eu-west-2.amazonaws.com/prod/api/brands?page=${currentPage}&limit=5`
       );
       setBrandsPages(response.data);
     } catch (error) {
@@ -82,7 +84,9 @@ const ListBrand = (props) => {
 
   const proceedDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/brands/${id}`);
+      await axios.delete(
+        `https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/delete-brand/${id}`
+      );
       setBrands((prevBrands) => prevBrands.filter((brand) => brand._id !== id));
     } catch (error) {
       console.error("Error deleting brand", error);

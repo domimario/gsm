@@ -7,19 +7,30 @@ import Form from "react-bootstrap/Form";
 import AddPost from "./AddSellerEnuminacion.svg";
 import Swal from "sweetalert2";
 import { BsArrowLeft } from "react-icons/bs";
+import Text from "../../../components/Text/Text";
 
 const AddBrand = (props) => {
-  const [brandName, setBrandName] = useState("");
-  const [brandOrigin, setBrandOrigin] = useState("");
   const navigate = useNavigate();
+  const [brand, setBrand] = useState({
+    brandName: "",
+    brandOrigin: "",
+    models: [],
+  });
+  const [modelsList, setModelsList] = useState([]);
 
-  const clearForm = () => {
-    setBrandName("");
-    setBrandOrigin("");
-  };
+  useEffect(() => {
+    fetchModels();
+  }, []);
 
-  const handleBackClick = () => {
-    navigate("/brands");
+  const fetchModels = async () => {
+    try {
+      const response = await axios.get(
+        "https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/all-models"
+      ); // Updated URL
+      setModelsList(response.data);
+    } catch (error) {
+      console.error("Error fetching models:", error);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -27,12 +38,13 @@ const AddBrand = (props) => {
 
     try {
       const newBrand = {
-        brandName,
-        brandOrigin,
+        brandName: brand.brandName,
+        brandOrigin: brand.brandOrigin,
+        models: brand.models,
       };
 
       const response = await axios.post(
-        "http://localhost:8000/api/brands",
+        "https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/create-brand",
         newBrand
       );
       Swal.fire({
@@ -45,14 +57,39 @@ const AddBrand = (props) => {
       navigate("/brands");
       console.log("New brand created: ", response.data);
 
-      setBrandName("");
-      setBrandOrigin("");
-    } catch (error) {}
+      setBrand({
+        brandName: "",
+        brandOrigin: "",
+        models: [],
+      });
+    } catch (error) {
+      console.error("Error creating brand:", error);
+    }
+  };
+
+  const clearForm = () => {
+    setBrand({
+      brandName: "",
+      brandOrigin: "",
+      models: [],
+    });
+  };
+
+  const handleBackClick = () => {
+    navigate("/brands");
+  };
+
+  const onModelsChange = (e) => {
+    const selectedModels = Array.from(
+      e.target.selectedOptions,
+      (option) => option.value
+    );
+    setBrand({ ...brand, models: selectedModels });
   };
 
   return (
     <>
-      <div className="container-add">
+      <div className=" container container-add">
         <div className="row">
           <div className="col-md-6">
             <img src={AddPost} alt="" className="img-fluid" />
@@ -61,32 +98,78 @@ const AddBrand = (props) => {
             <div className="new-seller-head">
               {" "}
               <Button onClick={handleBackClick} className="back-button ">
-                <BsArrowLeft size={25} />
+                <BsArrowLeft size={15} />
               </Button>
-              <h1>New Seller</h1>
+              <Text
+                text={"New Brand"}
+                family={"open-sans"}
+                lineheight={"l24"}
+                size={"s40"}
+                weight={"bold"}
+                color={"white"}
+              />
             </div>
             <div className="add-form">
               <Form onSubmit={handleSubmit}>
                 <Form.Group>
-                  <Form.Label>Brand Name</Form.Label>
+                  <Form.Label> <Text
+                        text={"Brand Name"}
+                        family={"open-sans"}
+                        lineheight={"l20"}
+                        size={"s16"}
+                        weight={"regular"}
+                        color={"white"}
+                      /></Form.Label>
                   <Form.Control
                     required
                     type="text"
                     placeholder="ex . Samsung"
-                    value={brandName}
-                    onChange={(e) => setBrandName(e.target.value)}
+                    value={brand.brandName}
+                    onChange={(e) =>
+                      setBrand({ ...brand, brandName: e.target.value })
+                    }
                   />
                 </Form.Group>
                 <Form.Group>
-                  <Form.Label>Brand Origin</Form.Label>
+                  <Form.Label> <Text
+                        text={"Brand Origin"}
+                        family={"open-sans"}
+                        lineheight={"l20"}
+                        size={"s16"}
+                        weight={"regular"}
+                        color={"white"}
+                      /></Form.Label>
                   <Form.Control
                     required
                     type="text"
                     placeholder="ex . South Korea"
-                    value={brandOrigin}
-                    onChange={(e) => setBrandOrigin(e.target.value)}
+                    value={brand.brandOrigin}
+                    onChange={(e) =>
+                      setBrand({ ...brand, brandOrigin: e.target.value })
+                    }
                   />
                 </Form.Group>
+
+                <Form.Label> <Text
+                        text={"Choose multiple models"}
+                        family={"open-sans"}
+                        lineheight={"l20"}
+                        size={"s16"}
+                        weight={"regular"}
+                        color={"white"}
+                      /></Form.Label>
+                <Form.Control
+                  as="select"
+                  multiple
+                  value={brand.models}
+                  onChange={onModelsChange}
+                >
+                  {modelsList.map((model) => (
+                    <option key={model._id} value={model._id}>
+                      {model.model}
+                    </option>
+                  ))}
+                </Form.Control>
 
                 <div className="button-forms">
                   {" "}
@@ -105,4 +188,5 @@ const AddBrand = (props) => {
     </>
   );
 };
+
 export default AddBrand;

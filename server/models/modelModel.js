@@ -1,17 +1,11 @@
 const mongoose = require("mongoose");
 
 const ModelSchema = new mongoose.Schema({
-  
-  brandName: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Brand",
-    required: true,
-  },
+  seller: [{ type: mongoose.Schema.Types.ObjectId, ref: "Seller" }],
 
-  modelName: {
-    type: String,
-    required: [true],
-  },
+  brand: { type: mongoose.Schema.Types.ObjectId, ref: "Brand" },
+
+  model: { type: String },
 
   ram: [
     {
@@ -29,12 +23,9 @@ const ModelSchema = new mongoose.Schema({
     },
   ],
 
-  modelColor: [
-    {
-      type: [String],
-      required: [true],
-    },
-  ],
+  color: {
+    type: [String],
+    required: [true],
+  },
 });
-
 module.exports = mongoose.model("Model", ModelSchema);

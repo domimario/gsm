@@ -5,9 +5,12 @@
   width: 500px;
 }
 .edit-content {
-  margin-top: 100px;
+  background-color: #004bad;
+  padding-top: 30px;
+  padding-bottom: 30px;
 }
 .edit-seller-head {
   display: flex;
+  align-items: center;
   margin-bottom: 25px;
 }

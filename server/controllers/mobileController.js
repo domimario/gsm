@@ -13,7 +13,6 @@ module.exports.createMobile = async (req, res) => {
   }
 };
 
-
 module.exports.getMobiles = async (req, res) => {
   try {
     const { page, limit } = req.query;
@@ -30,16 +29,14 @@ module.exports.getMobiles = async (req, res) => {
   }
 };
 
-
-
 //Controller for getting all Mobile devices.
 
 module.exports.getAllMobiles = async (req, res) => {
   try {
     const mobile = await Mobile.find({})
-      .populate("brandName")
-      .populate("modelName")
-      .populate("sellers")
+      .populate("brand")
+      .populate("model")
+      .populate("seller")
       .select("-__v");
     res.status(200).json(mobile);
   } catch (error) {
@@ -53,9 +50,9 @@ module.exports.getMobileById = async (req, res) => {
   try {
     const { id } = req.params;
     const mobile = await Mobile.findById(id)
-      .populate("brandName")
-      .populate("modelName")
-      .populate("sellers")
+      .populate("brand")
+      .populate("model")
+      .populate("seller")
       .select("-__v");
     res.status(200).json(mobile);
   } catch (error) {

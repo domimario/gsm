@@ -20,7 +20,7 @@ const DetailsBrand = (props) => {
   const fetchBrandDetails = async () => {
     try {
       const brandResponse = await axios.get(
-        `http://localhost:8000/api/brands/${id}`
+        `https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/brands/${id}`
       );
       const brandData = brandResponse.data;
       setBrand(brandData);

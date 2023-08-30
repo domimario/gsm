@@ -10,7 +10,7 @@ const GetBrandNames = ({ modelsIds }) => {
   const loadModels = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/models/${modelsIds}`
+        `https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/model/${modelsIds}`
       );
       setModels(response.data);
     } catch (error) {}

@@ -1,5 +1,5 @@
 {
-  "name": "gsm",
+  "name": "server",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
@@ -17,6 +17,7 @@
     "i": "^0.3.7",
     "mongodb": "^5.7.0",
     "mongoose": "^7.4.0",
-    "nodemon": "^2.0.6"
+    "nodemon": "^2.0.6",
+    "serverless-http": "^3.2.0"
   }
 }

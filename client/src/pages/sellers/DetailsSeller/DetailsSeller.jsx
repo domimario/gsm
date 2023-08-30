@@ -19,7 +19,7 @@ const DetailsSeller = (props) => {
   const fetchSellerDetails = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:8000/api/sellers/${id}`
+        `https://uthmtrqdvk.execute-api.eu-west-2.amazonaws.com/prod/api/sellers/${id}`
       );
       setSeller(response.data);
     } catch (error) {

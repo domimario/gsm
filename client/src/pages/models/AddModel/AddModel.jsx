@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./AddModel.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -7,19 +7,23 @@ import Form from "react-bootstrap/Form";
 import AddPost from "./AddSellerEnuminacion.svg";
 import Swal from "sweetalert2";
 import { BsArrowLeft } from "react-icons/bs";
+import Text from "../../../components/Text/Text";
 
-const AddModel = (props) => {
-  const [modelName, setModelName] = useState("");
+const AddModel = () => {
+  const [model, setModel] = useState("");
   const [ram, setRam] = useState("");
   const [memory, setMemory] = useState("");
-  const [modelColor, setModelColor] = useState("");
+  const [color, setColor] = useState("");
+
   const navigate = useNavigate();
 
+  useEffect(() => {}, []);
+
   const clearForm = () => {
-    setModelName("");
+    setModel("");
     setRam("");
     setMemory("");
-    setModelColor("");
+    setColor("");
   };
 
   const handleBackClick = () => {
@@ -31,14 +35,14 @@ const AddModel = (props) => {
 
     try {
       const newModel = {
-        modelName,
+        model,
         ram,
         memory,
-        modelColor,
+        color,
       };
 
       const response = await axios.post(
-        "http://localhost:8000/api/models",
+        "https://uthmtrqdvk.execute-api.eu-west-2.amazonaws.com/prod/api/models",
         newModel
       );
       Swal.fire({
@@ -49,18 +53,18 @@ const AddModel = (props) => {
         timer: 2700,
       });
       navigate("/models");
-      console.log("New mdoel created: ", response.data);
+      console.log("New model created: ", response.data);
 
-      setModelName("");
-      setRam("");
-      setMemory("");
-      setModelColor("");
-    } catch (error) {}
+      setModel("");
+      // Clear selected brand after submission
+    } catch (error) {
+      console.error("Error adding model", error);
+    }
   };
 
   return (
     <>
-      <div className="container-add">
+      <div className=" container container-add">
         <div className="row">
           <div className="col-md-6">
             <img src={AddPost} alt="" className="img-fluid" />
@@ -69,26 +73,52 @@ const AddModel = (props) => {
             <div className="new-seller-head">
               {" "}
               <Button onClick={handleBackClick} className="back-button ">
-                <BsArrowLeft size={25} />
+                <BsArrowLeft size={15} />
               </Button>
-              <h1>New Model</h1>
+              <Text
+                text={"New Model"}
+                family={"open-sans"}
+                lineheight={"l24"}
+                size={"s40"}
+                weight={"bold"}
+                color={"white"}
+              />
             </div>
             <div className="add-form">
               <Form onSubmit={handleSubmit}>
                 <Form.Group>
-                  <Form.Label>Model Name</Form.Label>
+                  <Form.Label>
+                    {" "}
+                    <Text
+                      text={"Model Name"}
+                      family={"open-sans"}
+                      lineheight={"l20"}
+                      size={"s16"}
+                      weight={"regular"}
+                      color={"white"}
+                    />
+                  </Form.Label>
                   <Form.Control
                     required
                     type="text"
                     placeholder="ex . Galaxy S23 Ultra"
-                    value={modelName}
-                    onChange={(e) => setModelName(e.target.value)}
+                    value={model}
+                    onChange={(e) => setModel(e.target.value)}
                   />
                 </Form.Group>
                 <Form.Group>
-                  <Form.Label>Ram</Form.Label>
+                  <Form.Label>
+                    {" "}
+                    <Text
+                      text={"Ram"}
+                      family={"open-sans"}
+                      lineheight={"l20"}
+                      size={"s16"}
+                      weight={"regular"}
+                      color={"white"}
+                    />
+                  </Form.Label>
                   <Form.Control
-                    required
                     type="number"
                     placeholder="ex . 8"
                     value={ram}
@@ -96,25 +126,44 @@ const AddModel = (props) => {
                   />
                 </Form.Group>
                 <Form.Group>
-                  <Form.Label>Memory</Form.Label>
+                  <Form.Label>
+                    {" "}
+                    <Text
+                      text={"Memory"}
+                      family={"open-sans"}
+                      lineheight={"l20"}
+                      size={"s16"}
+                      weight={"regular"}
+                      color={"white"}
+                    />
+                  </Form.Label>
                   <Form.Control
-                    required
                     type="number"
-                    placeholder="ex . 128"
+                    placeholder="ex . 64"
                     value={memory}
                     onChange={(e) => setMemory(e.target.value)}
                   />
                 </Form.Group>
                 <Form.Group>
-                  <Form.Label>Color</Form.Label>
+                  <Form.Label>
+                    {" "}
+                    <Text
+                      text={"Color"}
+                      family={"open-sans"}
+                      lineheight={"l20"}
+                      size={"s16"}
+                      weight={"regular"}
+                      color={"white"}
+                    />
+                  </Form.Label>
                   <Form.Control
-                    required
                     type="text"
                     placeholder="ex . Red"
-                    value={modelColor}
-                    onChange={(e) => setModelColor(e.target.value)}
+                    value={color}
+                    onChange={(e) => setColor(e.target.value)}
                   />
                 </Form.Group>
+
                 <div className="button-forms">
                   {" "}
                   <Button type="submit" variant="success">

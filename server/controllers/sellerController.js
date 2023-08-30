@@ -71,7 +71,7 @@ module.exports.getSellers = async (req, res) => {
 
 module.exports.getAllSellers = async (req, res) => {
   try {
-    const seller = await Seller.find({}).populate("mobiles").select("-__v");
+    const seller = await Seller.find({}).populate("models").select("-__v");
     res.status(200).json(seller);
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -83,7 +83,7 @@ module.exports.getAllSellers = async (req, res) => {
 module.exports.getSellerById = async (req, res) => {
   try {
     const { id } = req.params;
-    const seller = await Seller.findById(id).populate("mobiles").select("-__v");
+    const seller = await Seller.findById(id).populate("models").select("-__v");
     res.status(200).json(seller);
   } catch (error) {
     res.status(500).json({ message: error.message });
