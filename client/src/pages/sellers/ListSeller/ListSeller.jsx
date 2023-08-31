@@ -31,7 +31,9 @@ const ListSeller = (prop) => {
 
   const fetchSellers = async (currentPage) => {
     try {
-      const response = await axios.get("https://uthmtrqdvk.execute-api.eu-west-2.amazonaws.com/prod/api/sellersall");
+      const response = await axios.get(
+        "https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/all-sellers"
+      );
       setSellers(response.data);
     } catch (error) {
       console.error("Error fetching sellers", error);
@@ -91,7 +93,9 @@ const ListSeller = (prop) => {
 
   const proceedDelete = async (id) => {
     try {
-      await axios.delete(`https://uthmtrqdvk.execute-api.eu-west-2.amazonaws.com/prod/api/sellers/${id}`);
+      await axios.delete(
+        `https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/delete-seller/${id}`
+      );
       setSellers((prevSellers) =>
         prevSellers.filter((seller) => seller._id !== id)
       );

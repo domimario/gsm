@@ -46,7 +46,7 @@ const AddSeller = (props) => {
       };
 
       const response = await axios.post(
-        "https://uthmtrqdvk.execute-api.eu-west-2.amazonaws.com/prod/api/sellers",
+        "https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/create-seller",
         newSeller
       );
       Swal.fire({

@@ -42,7 +42,7 @@ const AddModel = () => {
       };
 
       const response = await axios.post(
-        "https://uthmtrqdvk.execute-api.eu-west-2.amazonaws.com/prod/api/models",
+        "https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/create-model",
         newModel
       );
       Swal.fire({

@@ -20,7 +20,7 @@ const DetailsModel = () => {
   const loadModelDetails = async () => {
     try {
       const response = await axios.get(
-        `https://uthmtrqdvk.execute-api.eu-west-2.amazonaws.com/prod/api/models/${id}`
+        `https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/model/${id}`
       );
       setModel(response.data);
       if (response.data.brand) {

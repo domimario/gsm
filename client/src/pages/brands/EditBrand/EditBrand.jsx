@@ -72,7 +72,7 @@ const EditBrand = (props) => {
 
   const update = async (e) => {
     await axios.put(
-      `https://owhww9cgih.execute-api.eu-west-2.amazonaws.com/dev/update-brand/${id}`,
+      `https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/update-brand/${id}`,
       brand
     );
     console.log("Brand updated successfully!");

@@ -30,7 +30,9 @@ const ListModel = (props) => {
 
   const fetchModels = async () => {
     try {
-      const response = await axios.get("https://uthmtrqdvk.execute-api.eu-west-2.amazonaws.com/prod/api/modelsall");
+      const response = await axios.get(
+        "https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/all-models"
+      );
       setModels(response.data);
     } catch (error) {
       console.error("Error fetching models", error);
@@ -90,7 +92,9 @@ const ListModel = (props) => {
 
   const proceedDelete = async (id) => {
     try {
-      await axios.delete(`https://uthmtrqdvk.execute-api.eu-west-2.amazonaws.com/prod/api/models/${id}`);
+      await axios.delete(
+        `https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/delete-model/${id}`
+      );
       setModels((prevModels) => prevModels.filter((model) => model._id !== id));
     } catch (error) {
       console.error("Error deleting seller", error);

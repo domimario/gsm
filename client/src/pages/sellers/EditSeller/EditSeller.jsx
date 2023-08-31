@@ -34,7 +34,7 @@ const EditSeller = (props) => {
   const loadSeller = async () => {
     try {
       const response = await axios.get(
-        `https://uthmtrqdvk.execute-api.eu-west-2.amazonaws.com/prod/api/sellers/${id}`
+        `https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/seller/${id}`
       );
       setSeller(response.data);
       setOriginalSeller(response.data);
@@ -44,7 +44,7 @@ const EditSeller = (props) => {
 
     try {
       const modelsResponse = await axios.get(
-        `https://uthmtrqdvk.execute-api.eu-west-2.amazonaws.com/prod/api/modelsall`
+        `https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/all-models`
       );
       setModelsList(modelsResponse.data);
     } catch (error) {
@@ -73,7 +73,10 @@ const EditSeller = (props) => {
   };
 
   const update = async () => {
-    await axios.put(`https://uthmtrqdvk.execute-api.eu-west-2.amazonaws.com/prod/api/sellers/${id}`, seller);
+    await axios.put(
+      `https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/update-seller/${id}`,
+      seller
+    );
   };
 
   const clearForm = () => {
