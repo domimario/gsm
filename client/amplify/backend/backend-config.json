@@ -1,0 +1,45 @@
+{
+  "auth": {
+    "gsmamplifyf3b31880": {
+      "customAuth": false,
+      "dependsOn": [],
+      "providerPlugin": "awscloudformation",
+      "service": "Cognito",
+      "serviceType": "imported"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_auth_gsmamplifyf3b31880_nativeClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "gsmamplifyf3b31880"
+        }
+      ]
+    },
+    "AMPLIFY_auth_gsmamplifyf3b31880_userPoolId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "gsmamplifyf3b31880"
+        }
+      ]
+    },
+    "AMPLIFY_auth_gsmamplifyf3b31880_userPoolName": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "gsmamplifyf3b31880"
+        }
+      ]
+    },
+    "AMPLIFY_auth_gsmamplifyf3b31880_webClientId": {
+      "usedBy": [
+        {
+          "category": "auth",
+          "resourceName": "gsmamplifyf3b31880"
+        }
+      ]
+    }
+  }
+}
