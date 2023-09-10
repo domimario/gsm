@@ -8,6 +8,8 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { IoIosAdd } from "react-icons/io";
 import Spinner from "../../../components/Spinner/Spinner";
+import { Auth } from "aws-amplify";
+import { BASE_URL } from "../../../api";
 
 const ListSeller = (prop) => {
   const [loading, setLoading] = useState(true);
@@ -19,10 +21,6 @@ const ListSeller = (prop) => {
   useEffect(() => {
     const fetchData = async () => {
       await fetchSellers();
-      setLoading(true); // Show the spinner
-      setTimeout(() => {
-        setLoading(false); // Hide the spinner after 2 seconds
-      }, 1000);
       fetchSellersPages();
     };
 
@@ -30,13 +28,14 @@ const ListSeller = (prop) => {
   }, []);
 
   const fetchSellers = async (currentPage) => {
+    setLoading(true);
     try {
-      const response = await axios.get(
-        "https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/all-sellers"
-      );
+      const response = await axios.get(`${BASE_URL}/all-sellers`);
       setSellers(response.data);
     } catch (error) {
       console.error("Error fetching sellers", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -92,10 +91,14 @@ const ListSeller = (prop) => {
   };
 
   const proceedDelete = async (id) => {
+    const user = await Auth.currentAuthenticatedUser();
+    const token = user.signInUserSession.idToken.jwtToken;
     try {
-      await axios.delete(
-        `https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/delete-seller/${id}`
-      );
+      await axios.delete(`${BASE_URL}/delete-seller/${id}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
       setSellers((prevSellers) =>
         prevSellers.filter((seller) => seller._id !== id)
       );
@@ -148,7 +151,8 @@ const ListSeller = (prop) => {
                     <Button
                       variant="secondary"
                       onClick={(e) => {
-                        EditSeller(seller._id);
+                        navigate(`/sellers/edit/${seller._id}`);
+                        // EditSeller(seller._id);
                       }}
                     >
                       Edit

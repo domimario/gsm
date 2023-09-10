@@ -7,6 +7,8 @@ import Button from "react-bootstrap/Button";
 import { BsArrowLeft } from "react-icons/bs";
 import Card from "react-bootstrap/Card";
 import GetModelsName from "./GetModelsName";
+import { BASE_URL } from "../../../api";
+// import { Auth } from "aws-amplify";
 
 const DetailsBrand = (props) => {
   const [brand, setBrand] = useState("");
@@ -18,9 +20,16 @@ const DetailsBrand = (props) => {
   }, []);
 
   const fetchBrandDetails = async () => {
+    // const user = await Auth.currentAuthenticatedUser();
+    // const token = user.signInUserSession.idToken.jwtToken;
     try {
       const brandResponse = await axios.get(
-        `https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/brands/${id}`
+        `${BASE_URL}/brands/${id}`,
+        // {
+        //   headers: {
+        //     Authorization: token,
+        //   },
+        // }
       );
       const brandData = brandResponse.data;
       setBrand(brandData);

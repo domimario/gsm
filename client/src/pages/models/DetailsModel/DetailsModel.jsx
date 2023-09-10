@@ -6,6 +6,7 @@ import Button from "react-bootstrap/esm/Button";
 import ListGroup from "react-bootstrap/esm/ListGroup";
 import { BsArrowLeft } from "react-icons/bs";
 import Text from "../../../components/Text/Text";
+import { BASE_URL } from "../../../api";
 
 const DetailsModel = () => {
   const { id } = useParams();
@@ -19,9 +20,7 @@ const DetailsModel = () => {
 
   const loadModelDetails = async () => {
     try {
-      const response = await axios.get(
-        `https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/model/${id}`
-      );
+      const response = await axios.get(`${BASE_URL}/model/${id}`);
       setModel(response.data);
       if (response.data.brand) {
         fetchSellersByModel(response.data.brand);

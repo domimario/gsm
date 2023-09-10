@@ -8,6 +8,9 @@ import AddPost from "./AddSellerEnuminacion.svg";
 import Swal from "sweetalert2";
 import { BsArrowLeft } from "react-icons/bs";
 import Text from "../../../components/Text/Text";
+import { Auth } from "aws-amplify";
+import { BASE_URL } from "../../../api";
+import Message from "../../../components/notAuth/Message"; 
 
 const AddSeller = (props) => {
   const [sellerName, setSellerName] = useState("");
@@ -44,10 +47,16 @@ const AddSeller = (props) => {
         sellerNipt,
         location,
       };
-
+      const user = await Auth.currentAuthenticatedUser();
+      const token = user.signInUserSession.idToken.jwtToken;
       const response = await axios.post(
-        "https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/create-seller",
-        newSeller
+        `${BASE_URL}/create-seller`,
+        newSeller,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
       );
       Swal.fire({
         position: "center-top",
@@ -71,6 +80,12 @@ const AddSeller = (props) => {
       );
     }
   };
+
+ 
+  const isAuthenticated = Auth.user;
+  if (!isAuthenticated) {
+    return <Message />;
+  }
 
   return (
     <>
@@ -168,6 +183,18 @@ const AddSeller = (props) => {
                     </Button>
                   </div>
                 </Form>
+                {error && (
+                  <div className="error-message">
+                    <Text
+                      text={error}
+                      family={"open-sans"}
+                      lineheight={"l20"}
+                      size={"s16"}
+                      weight={"bold"}
+                      color={"red"}
+                    />
+                  </div>
+                )}
               </div>
             </div>
           </div>

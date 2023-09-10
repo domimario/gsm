@@ -8,6 +8,9 @@ import AddPost from "./AddSellerEnuminacion.svg";
 import Swal from "sweetalert2";
 import { BsArrowLeft } from "react-icons/bs";
 import Text from "../../../components/Text/Text";
+import { Auth } from "aws-amplify";
+import { BASE_URL } from "../../../api";
+import Message from "../../../components/notAuth/Message";
 
 const AddBrand = (props) => {
   const navigate = useNavigate();
@@ -24,9 +27,7 @@ const AddBrand = (props) => {
 
   const fetchModels = async () => {
     try {
-      const response = await axios.get(
-        "https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/all-models"
-      ); // Updated URL
+      const response = await axios.get(`${BASE_URL}/all-models`); // Updated URL
       setModelsList(response.data);
     } catch (error) {
       console.error("Error fetching models:", error);
@@ -35,7 +36,8 @@ const AddBrand = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    const user = await Auth.currentAuthenticatedUser();
+    const token = user.signInUserSession.idToken.jwtToken;
     try {
       const newBrand = {
         brandName: brand.brandName,
@@ -43,10 +45,11 @@ const AddBrand = (props) => {
         models: brand.models,
       };
 
-      const response = await axios.post(
-        "https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/create-brand",
-        newBrand
-      );
+      const response = await axios.post(`${BASE_URL}/create-brand`, newBrand, {
+        headers: {
+          Authorization: token,
+        },
+      });
       Swal.fire({
         position: "center-top",
         icon: "success",
@@ -87,6 +90,11 @@ const AddBrand = (props) => {
     setBrand({ ...brand, models: selectedModels });
   };
 
+  const isAuthenticated = Auth.user;
+  if (!isAuthenticated) {
+    return <Message />;
+  }
+
   return (
     <>
       <div className=" container container-add">
@@ -112,14 +120,17 @@ const AddBrand = (props) => {
             <div className="add-form">
               <Form onSubmit={handleSubmit}>
                 <Form.Group>
-                  <Form.Label> <Text
-                        text={"Brand Name"}
-                        family={"open-sans"}
-                        lineheight={"l20"}
-                        size={"s16"}
-                        weight={"regular"}
-                        color={"white"}
-                      /></Form.Label>
+                  <Form.Label>
+                    {" "}
+                    <Text
+                      text={"Brand Name"}
+                      family={"open-sans"}
+                      lineheight={"l20"}
+                      size={"s16"}
+                      weight={"regular"}
+                      color={"white"}
+                    />
+                  </Form.Label>
                   <Form.Control
                     required
                     type="text"
@@ -131,14 +142,17 @@ const AddBrand = (props) => {
                   />
                 </Form.Group>
                 <Form.Group>
-                  <Form.Label> <Text
-                        text={"Brand Origin"}
-                        family={"open-sans"}
-                        lineheight={"l20"}
-                        size={"s16"}
-                        weight={"regular"}
-                        color={"white"}
-                      /></Form.Label>
+                  <Form.Label>
+                    {" "}
+                    <Text
+                      text={"Brand Origin"}
+                      family={"open-sans"}
+                      lineheight={"l20"}
+                      size={"s16"}
+                      weight={"regular"}
+                      color={"white"}
+                    />
+                  </Form.Label>
                   <Form.Control
                     required
                     type="text"
@@ -150,14 +164,17 @@ const AddBrand = (props) => {
                   />
                 </Form.Group>
 
-                <Form.Label> <Text
-                        text={"Choose multiple models"}
-                        family={"open-sans"}
-                        lineheight={"l20"}
-                        size={"s16"}
-                        weight={"regular"}
-                        color={"white"}
-                      /></Form.Label>
+                <Form.Label>
+                  {" "}
+                  <Text
+                    text={"Choose multiple models"}
+                    family={"open-sans"}
+                    lineheight={"l20"}
+                    size={"s16"}
+                    weight={"regular"}
+                    color={"white"}
+                  />
+                </Form.Label>
                 <Form.Control
                   as="select"
                   multiple

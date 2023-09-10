@@ -6,6 +6,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import { BsArrowLeft } from "react-icons/bs";
 import GetModelsName from "../../brands/DetailsBrand/GetModelsName";
+import { BASE_URL } from "../../../api";
 
 const DetailsSeller = (props) => {
   const { id } = useParams();
@@ -19,7 +20,7 @@ const DetailsSeller = (props) => {
   const fetchSellerDetails = async () => {
     try {
       const response = await axios.get(
-        `https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/seller/${id}`
+        `${BASE_URL}/seller/${id}`
       );
       setSeller(response.data);
     } catch (error) {

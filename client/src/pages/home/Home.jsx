@@ -24,7 +24,7 @@ const Home = (props) => {
           <div className=" col-lg-6 title">
             <div>
               <Text
-                text={"Better Choice For You"}
+                text={"Better Choice"}
                 family={"open-sans"}
                 lineheight={"l27"}
                 size={"s60"}
@@ -218,9 +218,8 @@ const Home = (props) => {
           </div>
           <div className=" col-xl-3 col-md-6 d-flex boom">
             <div className="icon-box">
-              
               <div>
-              <i
+                <i
                   class="fa-solid fa-sack-dollar"
                   style={{ color: " #004aad" }}
                 ></i>

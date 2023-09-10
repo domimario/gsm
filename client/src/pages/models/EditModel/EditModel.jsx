@@ -8,6 +8,9 @@ import EditSVG from "./undraw_up_to_date_re_nqid.svg";
 import Swal from "sweetalert2";
 import { BsArrowLeft } from "react-icons/bs";
 import Text from "../../../components/Text/Text";
+import { BASE_URL } from "../../../api";
+import { Auth } from "aws-amplify";
+import Message from "../../../components/notAuth/Message";
 
 const EditModel = (props) => {
   const { id } = useParams();
@@ -30,9 +33,7 @@ const EditModel = (props) => {
 
   const loadModel = async () => {
     try {
-      const response = await axios.get(
-        `https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/model/${id}`
-      );
+      const response = await axios.get(`${BASE_URL}/model/${id}`);
       setModels(response.data); // Update the state with the loaded seller data
 
       setOriginalModel(response.data); // Save the original seller data
@@ -50,10 +51,7 @@ const EditModel = (props) => {
   };
 
   const update = async (e) => {
-    await axios.put(
-      `https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/update-model/${id}`,
-      models
-    );
+    await axios.put(`${BASE_URL}/update-model/${id}`, models);
     console.log("Model updated successfully!");
   };
 
@@ -89,6 +87,11 @@ const EditModel = (props) => {
   const handleBackClick = () => {
     navigate("/models");
   };
+
+  const isAuthenticated = Auth.user;
+  if (!isAuthenticated) {
+    return <Message />;
+  }
 
   return (
     <>

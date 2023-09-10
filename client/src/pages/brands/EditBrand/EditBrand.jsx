@@ -8,6 +8,9 @@ import EditSVG from "./undraw_up_to_date_re_nqid.svg";
 import Swal from "sweetalert2";
 import { BsArrowLeft } from "react-icons/bs";
 import Text from "../../../components/Text/Text";
+import { Auth } from "aws-amplify";
+import { BASE_URL } from "../../../api";
+import Message from "../../../components/notAuth/Message";
 
 const EditBrand = (props) => {
   const { id } = useParams();
@@ -32,23 +35,18 @@ const EditBrand = (props) => {
 
   const loadBrand = async () => {
     try {
-      const response = await axios.get(
-        `https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/brands/${id}`
-      );
-      setBrand(response.data); // Update the state with the loaded brand data
-      setOriginalBrand(response.data); // Save the original brand data
+      const response = await axios.get(`${BASE_URL}/brands/${id}`);
+      setBrand(response.data);
+      setOriginalBrand(response.data);
     } catch (error) {
       console.log(error);
     }
   };
   const fetchModels = async () => {
     try {
-      const response = await axios.get(
-        "https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/all-models"
-      );
+      const response = await axios.get(`${BASE_URL}/all-models`);
       const allModels = response.data;
 
-      // Create a list of selected model IDs for the current brand
       const selectedModelIds = brand.models.map((model) => model._id);
 
       // Filter all models to include both selected models and those not selected
@@ -71,10 +69,13 @@ const EditBrand = (props) => {
   };
 
   const update = async (e) => {
-    await axios.put(
-      `https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/update-brand/${id}`,
-      brand
-    );
+    const user = await Auth.currentAuthenticatedUser();
+    const token = user.signInUserSession.idToken.jwtToken;
+    await axios.put(`${BASE_URL}/update-brand/${id}`, brand, {
+      headers: {
+        Authorization: token,
+      },
+    });
     console.log("Brand updated successfully!");
   };
 
@@ -109,6 +110,11 @@ const EditBrand = (props) => {
   const handleBackClick = () => {
     navigate("/brands");
   };
+
+  const isAuthenticated = Auth.user;
+  if (!isAuthenticated) {
+    return <Message />;
+  }
 
   return (
     <>

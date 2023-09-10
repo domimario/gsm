@@ -8,6 +8,8 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { IoIosAdd } from "react-icons/io";
 import Spinner from "../../../components/Spinner/Spinner";
+import { Auth } from "aws-amplify";
+import { BASE_URL } from "../../../api";
 
 const ListModel = (props) => {
   const [loading, setLoading] = useState(true);
@@ -30,9 +32,7 @@ const ListModel = (props) => {
 
   const fetchModels = async () => {
     try {
-      const response = await axios.get(
-        "https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/all-models"
-      );
+      const response = await axios.get(`${BASE_URL}/all-models`);
       setModels(response.data);
     } catch (error) {
       console.error("Error fetching models", error);
@@ -91,10 +91,14 @@ const ListModel = (props) => {
   };
 
   const proceedDelete = async (id) => {
+    const user = await Auth.currentAuthenticatedUser();
+    const token = user.signInUserSession.idToken.jwtToken;
     try {
-      await axios.delete(
-        `https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/delete-model/${id}`
-      );
+      await axios.delete(`${BASE_URL}/delete-model/${id}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
       setModels((prevModels) => prevModels.filter((model) => model._id !== id));
     } catch (error) {
       console.error("Error deleting seller", error);

@@ -8,19 +8,23 @@ import Button from "react-bootstrap/Button";
 import { IoIosAdd } from "react-icons/io";
 import Swal from "sweetalert2";
 import Spinner from "../../../components/Spinner/Spinner";
+import { Auth } from "aws-amplify";
+import { BASE_URL } from "../../../api";
+import Message from "../../../components/notAuth/Message";
 
 const ListBrand = (props) => {
   const [loading, setLoading] = useState(true);
   const [brands, setBrands] = useState([]);
   const [brandsPages, setBrandsPages] = useState([]);
   const navigate = useNavigate();
+  const [authenticated, setAuthenticated] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       await fetchBrands();
-      setLoading(true); // Show the spinner
+      setLoading(true);
       setTimeout(() => {
-        setLoading(false); // Hide the spinner after 2 seconds
+        setLoading(false);
       }, 1000);
       fetchBrandsPages();
     };
@@ -28,11 +32,22 @@ const ListBrand = (props) => {
     fetchData();
   }, []);
 
+  const checkAuthenticated = async () => {
+    try {
+      const user = await Auth.currentAuthenticatedUser();
+      if (user) {
+        setAuthenticated(true);
+      } else {
+        setAuthenticated(false);
+      }
+    } catch (error) {
+      setAuthenticated(false);
+    }
+  };
+
   const fetchBrands = async () => {
     try {
-      const response = await axios.get(
-        "https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/all-brands"
-      );
+      const response = await axios.get(`${BASE_URL}/all-brands`);
       setBrands(response.data);
     } catch (error) {
       console.error("Error fetching brandes", error);
@@ -83,10 +98,14 @@ const ListBrand = (props) => {
   };
 
   const proceedDelete = async (id) => {
+    const user = await Auth.currentAuthenticatedUser();
+    const token = user.signInUserSession.idToken.jwtToken;
     try {
-      await axios.delete(
-        `https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/delete-brand/${id}`
-      );
+      await axios.delete(`${BASE_URL}/delete-brand/${id}`, {
+        headers: {
+          Authorization: token,
+        },
+      });
       setBrands((prevBrands) => prevBrands.filter((brand) => brand._id !== id));
     } catch (error) {
       console.error("Error deleting brand", error);
@@ -102,7 +121,7 @@ const ListBrand = (props) => {
   };
   return (
     <>
-      {loading ? ( // Conditionally render the Spinner
+      {loading ? (
         <Spinner />
       ) : (
         <div className="table-container">

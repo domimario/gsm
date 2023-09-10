@@ -8,6 +8,9 @@ import AddPost from "./AddSellerEnuminacion.svg";
 import Swal from "sweetalert2";
 import { BsArrowLeft } from "react-icons/bs";
 import Text from "../../../components/Text/Text";
+import { Auth } from "aws-amplify";
+import { BASE_URL } from "../../../api";
+import Message from "../../../components/notAuth/Message";
 
 const AddModel = () => {
   const [model, setModel] = useState("");
@@ -34,6 +37,8 @@ const AddModel = () => {
     e.preventDefault();
 
     try {
+      const user = await Auth.currentAuthenticatedUser();
+      const token = user.signInUserSession.idToken.jwtToken;
       const newModel = {
         model,
         ram,
@@ -41,10 +46,11 @@ const AddModel = () => {
         color,
       };
 
-      const response = await axios.post(
-        "https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/create-model",
-        newModel
-      );
+      const response = await axios.post(`${BASE_URL}/create-model`, newModel, {
+        headers: {
+          Authorization: token,
+        },
+      });
       Swal.fire({
         position: "center-top",
         icon: "success",
@@ -61,6 +67,11 @@ const AddModel = () => {
       console.error("Error adding model", error);
     }
   };
+
+  const isAuthenticated = Auth.user;
+  if (!isAuthenticated) {
+    return <Message />;
+  }
 
   return (
     <>

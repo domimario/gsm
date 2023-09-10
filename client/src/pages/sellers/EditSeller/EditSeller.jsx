@@ -8,6 +8,9 @@ import EditSVG from "./undraw_up_to_date_re_nqid.svg";
 import Swal from "sweetalert2";
 import { BsArrowLeft } from "react-icons/bs";
 import Text from "../../../components/Text/Text";
+import { Auth } from "aws-amplify";
+import { BASE_URL } from "../../../api";
+import Message from "../../../components/notAuth/Message";
 
 const EditSeller = (props) => {
   const { id } = useParams();
@@ -33,9 +36,7 @@ const EditSeller = (props) => {
 
   const loadSeller = async () => {
     try {
-      const response = await axios.get(
-        `https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/seller/${id}`
-      );
+      const response = await axios.get(`${BASE_URL}/seller/${id}`);
       setSeller(response.data);
       setOriginalSeller(response.data);
     } catch (error) {
@@ -43,9 +44,7 @@ const EditSeller = (props) => {
     }
 
     try {
-      const modelsResponse = await axios.get(
-        `https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/all-models`
-      );
+      const modelsResponse = await axios.get(`${BASE_URL}/all-models`);
       setModelsList(modelsResponse.data);
     } catch (error) {
       console.log(error);
@@ -73,10 +72,22 @@ const EditSeller = (props) => {
   };
 
   const update = async () => {
-    await axios.put(
-      `https://ii8hbtn459.execute-api.eu-west-2.amazonaws.com/dev/update-seller/${id}`,
-      seller
-    );
+    const user = await Auth.currentAuthenticatedUser();
+    const token = user.signInUserSession.idToken.jwtToken;
+    try {
+      const response = await axios.put(
+        `${BASE_URL}/update-seller/${id}`,
+        seller,
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      console.log("Seller updated:", response.data);
+    } catch (error) {
+      console.error("Error updating seller:", error);
+    }
   };
 
   const clearForm = () => {
@@ -110,6 +121,10 @@ const EditSeller = (props) => {
     navigate("/sellers");
   };
 
+  const isAuthenticated = Auth.user;
+  if (!isAuthenticated) {
+    return <Message />;
+  }
   return (
     <>
       <div className=" container edit-content">
